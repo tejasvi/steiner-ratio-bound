@@ -1,0 +1,16 @@
+ALL LEMMA CONDITIONS IGNORED (informative). way 1 (published family) at w1 = (b,c,d,s,e) = ['134514/100000', '107421/100000', '347656/1000000', '100391/100000', '167969/1000000'], f := d; rho0 = 8572/10000
+pairs evaluated 1422 (158 splits x 9 lemma ids); usable (condition not certainly false) 839; of these with the condition certainly true 839
+max critical rho over usable pairs: in [0.880746469848, 0.880746469848] at split 151 (1-based line of d_regular_splits.txt), lemma 5
+top 10 pairs (critical rho enclosure, split, lemma, condition certainly true):
+  [0.880746469848, 0.880746469848]  split 151  lemma 5  True
+  [0.880746386076, 0.880746386076]  split 150  lemma 5  True
+  [0.880468833856, 0.880468833856]  split 149  lemma 5  True
+  [0.880143576372, 0.880143576372]  split 153  lemma 5  True
+  [0.879866403894, 0.879866403894]  split 152  lemma 5  True
+  [0.878027357971, 0.878027357971]  split 156  lemma 0  True
+  [0.878027357971, 0.878027357971]  split 156  lemma 1  True
+  [0.878027357971, 0.878027357971]  split 156  lemma 2  True
+  [0.878027357971, 0.878027357971]  split 156  lemma 3  True
+  [0.878027357971, 0.878027357971]  split 156  lemma 4  True
+pairs without a certified F(w, rho0) > 0: 84 [(136, 5, 'F(rho0) not certainly > 0'), (137, 5, 'F(rho0) not certainly > 0'), (138, 5, 'F(rho0) not certainly > 0'), (139, 5, 'F(rho0) not certainly > 0'), (140, 5, 'F(rho0) not certainly > 0')]
+RESULT: NOT CERTIFIED

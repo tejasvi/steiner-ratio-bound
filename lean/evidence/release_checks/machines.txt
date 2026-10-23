@@ -1,0 +1,15 @@
+Machines and parallelism of the full run (2026-10-22/23)
+
+Machine A (read again 2026-10-23T01:05Z): 384 hardware threads (2 sockets x 96 cores x 2 threads per core, 2 NUMA nodes),
+MemTotal 742,889,244 kB (708 GiB). Machine B was created with the same configuration as A and deleted after the run.
+Lean 4.35.0-rc3 (commit 470d5ce1400764999581fd26d5d72b00d990b0f4), Lake 5.0.0, Mathlib v4.35.0-rc3 (lake-manifest.json).
+
+Parallelism (from the run scripts, which set the variables below):
+- Shard modules (A: C1-C3 and C4 shards 0-194; B: C4 shards 195-436): `lake build` with LEAN_NUM_THREADS=20. Lake then
+  runs at most 20 modules at a time. Inside each Lean process, shardOKPar checks the shard's jobs in parallel Tasks, and
+  the machine ran at full load (99.9% user time).
+- B's build outputs (olean, ilean, trace, hash, IR of its 242 shard modules) were copied to A and accepted there by
+  `lake build --no-build` (no module rebuilt).
+- Case modules and S43Final on A, and the clean-copy checks of this directory: LEAN_NUM_THREADS=8.
+- lakefile.toml sets Elab.async = false (one elaboration thread per Lean process).
+Wall times: A 16,114 s (shards), B 14,924 s (shards), A 10 s (case modules + S43Final).

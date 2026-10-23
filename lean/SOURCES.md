@@ -1,0 +1,42 @@
+# Files whose comments were edited for this release
+
+The full proof was built from versions of these files that differ from the ones here only in comments and docstrings:
+every file below is identical to its built version once comments are removed. In addition, each edited Lean module was
+compiled against the build of the full proof and its declarations compared with the built ones (all identical), and
+`#print axioms` of both theorems gives the same output with the edited modules. All other files of the build, among them
+the 490 modules of `S43Data/C1` to `S43Data/C4`, are unchanged.
+
+| file | SHA-256 as built | SHA-256 as shipped |
+|---|---|---|
+| `S43/IntervalSound.lean` | 5055cb005414cefff1799133551b4bae835b4cc7751e1abe1d84ab418b6a511a | 14c2feb00f3df7bb32d7b6a4a018e3068964a812fccd02ad3afaa80835cffc54 |
+| `S43/Sound/Affine.lean` | 6f4adbf4b8127d3d2d5e1ee8bbf7c1dc9e1ee22ae9910e5fd9da6c0ce86a6afe | 97523ff9ed9ae003ca068a00a0daaa270f2a1afb525c267ccf83fef3aa3f3a5e |
+| `S43/Sound/Box.lean` | bad1b4da8ee80c2caf933f8bae0f119ab60e911622df50afa6199108734b8327 | 799022afaf6908f2c2703e30d0db29b0f6eca16aee8466b09861ded152f1b247 |
+| `S43/Sound/Bridge.lean` | fc5b3901ccd08ca2f3709674b554f8fc2c35184807d594eb8a520b84e46847f0 | a15fa36a956a9f3ded23df85cd87feccd18e8675eb7571be83f48a5237e0b5e5 |
+| `S43/Sound/Bump.lean` | e49d933815bb8ed063ec710c7087150d5aef5be8e7bdb7222ad32a71d9435c7d | 3dd6d512f3c1e0d5171e65260aeb4707e0b646ed921195cca0580535765abdbe |
+| `S43/Sound/Case.lean` | 640d05f9c1462bccaccbf3c3badb7e563645714ee6f061e6374577d624f56b60 | d58fc7232502e14d1621ba12f7636d69fdaf4c5756a48946cb51b18901436e07 |
+| `S43/Sound/Convex.lean` | 43d6edec9e1eeb39aafb6f51569b92cb148b54632a5b2687574ad1c9904cb764 | fd6194b079d97c0672638f32400439c29c925dcf734a2f1a6fc7ead67be62177 |
+| `S43/Sound/Data.lean` | 07c6870dfbfa1fe82427bf8ab924e93239f3560fb8e6fdaa06c48f32acbd9701 | 78573e396b80f45dbdd82798457737e7518f720ba0369daabd7416973ea8cf03 |
+| `S43/Sound/Enc.lean` | 5397df0a7b45c4bec4365dd89f77bfdee734a54976b6372925170a389128aa66 | 192df1017851042bd3bc53e1c0e621d8c4ea11948af21820c6826a9b71d170e4 |
+| `S43/Sound/EvalSound.lean` | 512a2b00a1f6444a211679ea9b221186cac43f5b5b849df9da69ddaa82c405f5 | e12d3827800937e5f9f358b49a1f902f6fe3facc53fd11512a86d09bec75e90f |
+| `S43/Sound/LemmaSound.lean` | e89fe70cf74a017b703267d810bda5b315fd7a13501e5fb7b191c29f2b37b29c | 9e67e5b6ac593543738c8a78113b4a889ce7d3503b2c48b7f217e76627c0f90e |
+| `S43/Sound/MainProof.lean` | 56cfe69d58665e4a2effbabebf5f48202d894a641f7441ad904f985bd22a8834 | 09db855c412ee40ed454fcf1a9f20c3e9c6cd96f76f1a5ddcea818670213b46f |
+| `S43/Sound/Net.lean` | 4b5be901e5941ad1692be334b6e6a3aa73d84aed6065e4514d7eb8e2af4392e8 | 44d5eef9eabf2600ce2210a023fff3a4de234ebfc37a27cafa372fc4a473335f |
+| `S43/Sound/Record.lean` | 4833d7c8ed8f5fe562eeb4678be87bb9201aa1932b7fcaec91e1981395314f10 | c566bfcf419b880dff538c80de54921260f80d8c87717de4e764c52cfbeafa5a |
+| `S43/Sound/Target.lean` | 6a006db566ad291c98344923583b1673a906e08cbdcea779668cf7ab262d2c0a | d75eda7edc68ca19b49888f87c98e703ceaf0b468c2848074dee58002e64d1e8 |
+| `S43/Sound/Unbounded.lean` | 322cff9554fc921715f7e9abdee5ace4813bd547edeb007aab1287ebc34e1757 | e6280f5595d1865c25c49a35de64c6a0805a6ddd2b5c5cf33f3f3161651b6d15 |
+| `S43/Sound/VertexSound.lean` | ff55dccbcd6f03b736b4bfc5f10d7b0aef5a23bd0a943a0bab13cc72f2d74421 | 4f5d7c4e1b799a8abac5ade07b976adc6bc4a5993d5b96a8db9e413ae5ed4235 |
+| `S43/Sound/Walk.lean` | 66563a79360c285731b524c71fa2b21d012996c9c4acb160772009b709b4ceb7 | a55439e98705fc9d450aaf0a800c68b86d23914387f2ff5a5650fe2259802404 |
+| `S43/Statements.lean` | 1f96c6bfb4b408f36210e075e5d6925ad1c92d808b003a204feb80c4e3301cef | ab138a5156b4181e5634d691ffa5e2c9ea31c40f72a298389f69d1e5b1be722f |
+| `S43Core/Check.lean` | c5ad78850c808040abac2a38733e3d432acee9475279b1a5eed2d55fab727c41 | 0c94e8eb63a66d58e7fd752104fa99c2876f71a359e635dd84d09e17810aa4fa |
+| `S43Core/Geom.lean` | e49e38fb3cdf0890b7be46663818cc66f20dad62453a58d136e8352cdd74e62c | bf7427d49f905f0f1154af8bd90cd39803de1123be66de7d6a5bb09ab28d4c16 |
+| `S43Core/Interval.lean` | 84ab31797cfd7bf2b555405b3240d32a630b9ed1b97e8a0b642f7bd9fab9e7cb | 0dcdaa22d80f6365acdf3ceda775296475ebec43c5e23e723df56504213dda81 |
+| `S43Core/Main.lean` | a9a5c9835491ba9dd35b55338f46b3c40d112af95e76d655bd396a9836b7c0b2 | fe28462f550c902e7cdfe21163867100b42c9ce2e57f189d067fb0e2dff8f133 |
+| `S43Core/Splits.lean` | e22989b1eb56955b6f93d4fff0900eaa6f5dea1a46656da1262b5bc2284fd12f | 94181a4cb15784ba1a4cb20e4fe78c1fc9106c89748bc209613d208565206078 |
+| `S43Core/Tree.lean` | dd3f47b33e3db074ba920d248d4d5fdb3f879271d895b087e300bf1999715c91 | 0a580f52e21e407bab3f1c44b116288a6b21d67a8a894b8dc72de03694b72645 |
+| `S43Core/Vertex.lean` | 779de91fed4ad7bfa08f0684728ee78c8ce610122cc14f1f8bdbeaef450b0b98 | b0d206ca230f969e5ae3d2c3ef7503da41fab0a888b9e2d81ac7b7a18e6def4d |
+| `S43Data/Loader.lean` | cdded79a0b43f161c7492ca82d36f86620bc38e93b8600c0ffb6efd9afd3a95f | cf5ee6d741bb5779f12945215663cadf12b6c4299f487e8cd50215b14e717da5 |
+| `S43Final.lean` | 5a0a0964613e130466ddf46ea9b3a30003c276cc2a8440ad2fca795c50f2942a | b3aebf639826d99f1b7625bda1d76136961ea82cbe4e8056a7458fce68199c82 |
+| `lakefile.toml` | e1d9b371dfc9efcdc5a0a05cb8a741ae2707657af916d637cd3026d851d82545 | 55fa37cddf901c4368018bf95f83e41b1ff2262048f2a89ff0e3a30234059308 |
+| `tools/gen_lean43c.py` | b715561a9300e729307bd40f1411697ea2d513820b0f7f8173cec78496b72dc7 | bfa51caab0de235b91a86b60e528933a5ae4db5b67f151c6f76ff33f268f8504 |
+| `tools/split43.c` | d65c998b146d40b3b28575e9218dc66f34c64b4c9bbb86017a8a02c69eb67c1c | d2d195088b460066dc4a7a7c83552b5bae2d1def1b8c27d7c6bf2c7392b3e774 |
+| `tools/tree43c.c` | 3e3540ea25d9aa7246e94e7206dba704749cd47a0ecd9ff70d13fac70279be7a | 17eb3c34d78c15f0c9427dd2c082be9d156745e5fb010f85f21c1e6500fdc15d |

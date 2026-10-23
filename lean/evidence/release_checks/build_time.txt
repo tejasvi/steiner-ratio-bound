@@ -1,0 +1,1 @@
+BUILD rc 0 wall 154 s with LEAN_NUM_THREADS=8 (machine: 384 hardware threads)

@@ -1,0 +1,11 @@
+# records crafted in the checker audit (lemma 0 A-X on boxes with c unbounded) and grafted cov80 certificate: v2 (29c2874d) vs v3 (90323b17); 2026-10-22T12:15:28Z
+cunb_rg.bin d_regular f_le_d v2: {"start": 0, "count": 4992, "ok": 14, "skip_sym": 0, "skip_sub": 0, "fail": 4978, "fails": [{"rec": 0, "id": 1
+cunb_rg.bin d_regular f_le_d v3: {"start": 0, "count": 4992, "ok": 0, "skip_sym": 0, "skip_sub": 0, "fail": 4992, "fails": [{"rec": 0, "id": 1,
+cunb_rg.bin d_regular f_ge_dv v2: {"start": 0, "count": 4992, "ok": 14, "skip_sym": 0, "skip_sub": 0, "fail": 4978, "fails": [{"rec": 0, "id": 1
+cunb_rg.bin d_regular f_ge_dv v3: {"start": 0, "count": 4992, "ok": 0, "skip_sym": 0, "skip_sub": 0, "fail": 4992, "fails": [{"rec": 0, "id": 1,
+cunb_st7.bin d_steiner f_ge_d v2: {"start": 0, "count": 74752, "ok": 30, "skip_sym": 0, "skip_sub": 0, "fail": 74722, "fails": [{"rec": 0, "id":
+cunb_st7.bin d_steiner f_ge_d v3: {"start": 0, "count": 74752, "ok": 0, "skip_sym": 0, "skip_sub": 0, "fail": 74752, "fails": [{"rec": 0, "id": 
+cunb_st8.bin d_steiner f_le_d v2: {"start": 0, "count": 149504, "ok": 50, "skip_sym": 0, "skip_sub": 0, "fail": 149454, "fails": [{"rec": 0, "id
+cunb_st8.bin d_steiner f_le_d v3: {"start": 0, "count": 149504, "ok": 0, "skip_sym": 0, "skip_sub": 0, "fail": 149504, "fails": [{"rec": 0, "id"
+graft_cert.bin (cov80 with root 55 = split 147, lemma 0) v2: {"start": 0, "count": 427, "ok": 393, "skip_sym": 0, "skip_sub": 34, "fail": 0, "fails": []}
+graft_cert.bin (cov80 with root 55 = split 147, lemma 0) v3: {"start": 0, "count": 427, "ok": 392, "skip_sym": 0, "skip_sub": 34, "fail": 1, "fails": [{"rec": 402, "id": 55, "split": 147, "lemma": 0, "why": "A-X edge on a box with c unbounded (lemma 0 needs c <= 1)"}]}

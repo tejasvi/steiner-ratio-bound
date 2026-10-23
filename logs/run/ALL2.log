@@ -1,0 +1,5 @@
+2026-10-22T10:30:07Z d_regular f_ge_dv done: RESULT: ALL RECORDS PASS OK COVER: the 10376823 record boxes tile the 64 root boxes (the domain [0,inf)^6)
+2026-10-22T11:07:12Z d_steiner f_ge_d done: RESULT: ALL RECORDS PASS OK COVER: the 12696761 record boxes tile the 128 root boxes (the domain [0,inf)^7)
+2026-10-22T11:23:37Z d_regular f_le_d done: RESULT: ALL RECORDS PASS OK COVER: the 95569010 record boxes tile the 64 root boxes (the domain [0,inf)^6)
+2026-10-22T12:12:12Z d_steiner f_le_d done: RESULT: FAILURES OR MISSING CHUNKS OK COVER: the 436460311 record boxes tile the 256 root boxes (the domain [0,inf)^8)
+ALL DONE 2026-10-22T12:12:12Z

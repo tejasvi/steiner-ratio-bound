@@ -1,0 +1,771 @@
+✔ [8959/9002] Built S43Core.Interval (270ms)
+✔ [8960/9002] Built S43Core.Interval:c.o (895ms)
+✔ [8961/9002] Built S43Core.Interval:dynlib (181ms)
+✔ [8962/9002] Built S43Core.Geom (496ms)
+✔ [8963/9002] Built S43Core.Geom:c.o (426ms)
+✔ [8964/9002] Built S43Core.Geom:dynlib (35ms)
+✔ [8965/9002] Built S43Core.Splits (198ms)
+✔ [8966/9002] Built S43Core.Splits:c.o (111ms)
+✔ [8967/9002] Built S43Core.Vertex (317ms)
+✔ [8968/9002] Built S43Core.Splits:dynlib (42ms)
+✔ [8969/9002] Built S43Core.Vertex:c.o (260ms)
+✔ [8970/9002] Built S43Core.Vertex:dynlib (36ms)
+✔ [8971/9002] Built S43Core.Check (282ms)
+✔ [8972/9002] Built S43Core.Check:c.o (213ms)
+✔ [8973/9002] Built S43Core.Check:dynlib (36ms)
+✔ [8974/9002] Built S43Core.Tree (314ms)
+✔ [8975/9002] Built S43Core.Tree:c.o (267ms)
+✔ [8976/9002] Built S43Core:shared (36ms)
+✔ [8977/9002] Built S43Data.Loader (11s)
+✔ [8978/9002] Built S43Pilot.P80.Skel (608ms)
+✔ [8979/9002] Built S43Pilot.P80.Shard00001 (677ms)
+✔ [8980/9002] Built S43Pilot.P80.Shard00002 (726ms)
+✔ [8981/9002] Built S43Pilot.P80.Shard00003 (634ms)
+✔ [8982/9002] Built S43Pilot.P80.Shard00000 (750ms)
+⚠ [8983/9002] Built S43.Statements (73s)
+warning: S43/Statements.lean:190:8: declaration uses `sorry`
+warning: S43/Statements.lean:246:8: declaration uses `sorry`
+⚠ [8984/9002] Built S43.IntervalSound (74s)
+warning: S43/IntervalSound.lean:157:8: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+✔ [8985/9002] Built S43.Sound.Affine (2.5s)
+✔ [8986/9002] Built S43.Sound.Net (2.4s)
+⚠ [8987/9002] Built S43.Sound.Enc (6.4s)
+warning: S43/Sound/Enc.lean:185:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Enc.lean:234:16: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Enc.lean:264:54: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Enc.lean:264:54: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [8988/9002] Built S43.Sound.Convex (7.4s)
+warning: S43/Sound/Convex.lean:23:23: Variable name `hab` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hab
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: S43/Sound/Convex.lean:34:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Convex.lean:40:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Convex.lean:48:51: Variable name `hab` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hab
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: S43/Sound/Convex.lean:195:23: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Convex.lean:306:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Convex.lean:312:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Convex.lean:300:20: Variable name `hab` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hab
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8989/9002] Built S43.Sound.VertexSound (2.8s)
+⚠ [8990/9002] Built S43.Sound.Box (2.8s)
+warning: S43/Sound/Box.lean:37:38: This simp argument is unused:
+  hlohi.1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [xl, upd, le_trans hlohi.1 hlohi.2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Box.lean:48:38: This simp argument is unused:
+  hlohi.2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [xh, upd, le_trans hlohi.1 hlohi.2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Box.lean:96:51: Variable name `hab` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hab
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [8991/9002] Built S43.Sound.LemmaSound (3.1s)
+warning: S43/Sound/LemmaSound.lean:19:37: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/LemmaSound.lean:19:37: Unused tactic linter: `(congr 1; funext K; cases K <;> rfl)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/LemmaSound.lean:25:37: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: S43/Sound/LemmaSound.lean:26:37: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: S43/Sound/LemmaSound.lean:96:32: This simp argument is unused:
+  Stmt.ids
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide [lemmaEntry, idsReg] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:96:42: This simp argument is unused:
+  idsReg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide [lemmaEntry, Stmt.ids] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:98:49: This simp argument is unused:
+  Bool.false_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide only [lemmaEntry, ↓reduceIte] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:108:32: This simp argument is unused:
+  Stmt.ids
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide [lemmaEntry, idsReg] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:108:42: This simp argument is unused:
+  idsReg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide [lemmaEntry, Stmt.ids] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:110:49: This simp argument is unused:
+  Bool.false_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide only [lemmaEntry, ↓reduceIte] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:120:49: This simp argument is unused:
+  Bool.false_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide only [lemmaEntry, ↓reduceIte] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:128:32: This simp argument is unused:
+  Stmt.ids
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide [lemmaEntry, idsSt] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/LemmaSound.lean:128:42: This simp argument is unused:
+  idsSt
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide [lemmaEntry, Stmt.ids] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [8992/9002] Built S43.Sound.EvalSound (3.5s)
+warning: S43/Sound/EvalSound.lean:68:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:69:15: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:89:35: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/EvalSound.lean:136:16: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:141:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:142:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:144:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:147:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:149:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:128:62: This simp argument is unused:
+  Bool.and_false
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide only [Stmt.ids, h1', ↓reduceIte, Bool.false_eq_true] at hl
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/EvalSound.lean:128:78: This simp argument is unused:
+  Bool.false_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp +decide only [Stmt.ids, h1', ↓reduceIte, Bool.and_false] at hl
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/EvalSound.lean:180:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:181:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:182:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:197:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:198:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:206:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:207:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:209:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:210:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:214:41: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:214:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:216:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:217:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:218:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:220:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:221:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/EvalSound.lean:229:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:230:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/EvalSound.lean:252:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [8993/9002] Built S43.Sound.Bump (9.5s)
+warning: S43/Sound/Bump.lean:61:76: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Bump.lean:201:49: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Bump.lean:209:56: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Bump.lean:213:54: This simp argument is unused:
+  vb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lemmaBound, fA, fs, fr, fP, fR, vc, vd, vs, ve]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:213:62: This simp argument is unused:
+  vd
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lemmaBound, fA, fs, fr, fP, fR, vb, vc, vs, ve]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:217:71: This simp argument is unused:
+  vb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fU, fr, fP, fR, vc, vd, vs, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:217:79: This simp argument is unused:
+  vd
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fU, fr, fP, fR, vb, vc, vs, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:217:83: This simp argument is unused:
+  vs
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fU, fr, fP, fR, vb, vc, vd, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:221:71: This simp argument is unused:
+  vb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fV, fr, fP, fR, vc, vd, vs, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:221:79: This simp argument is unused:
+  vd
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fV, fr, fP, fR, vb, vc, vs, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:221:83: This simp argument is unused:
+  vs
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fV, fr, fP, fR, vb, vc, vd, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:225:71: This simp argument is unused:
+  vb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fD, fr, fP, fR, vc, vd, vs, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:225:79: This simp argument is unused:
+  vd
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fD, fr, fP, fR, vb, vc, vs, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:225:83: This simp argument is unused:
+  vs
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [lemmaBound, reduceCtorEq, ↓reduceIte, fD, fr, fP, fR, vb, vc, vd, ve, bcoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:264:25: This simp argument is unused:
+  wbump
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [spVal, scoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:266:22: This simp argument is unused:
+  wbump
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [spVal, scoef]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: S43/Sound/Bump.lean:312:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bump.lean:320:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bump.lean:330:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bump.lean:330:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bump.lean:350:36: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Bump.lean:356:69: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: S43/Sound/Bump.lean:407:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bump.lean:410:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bump.lean:455:105: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Bump.lean:455:47: Unused tactic linter: `exact h` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Bump.lean:455:105: Unused tactic linter: `simp at h` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [8994/9002] Built S43.Sound.Unbounded (3.5s)
+warning: S43/Sound/Unbounded.lean:48:26: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Unbounded.lean:48:35: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: S43/Sound/Unbounded.lean:48:26: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Unbounded.lean:48:35: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: S43/Sound/Unbounded.lean:48:26: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Unbounded.lean:48:35: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: S43/Sound/Unbounded.lean:48:26: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: S43/Sound/Unbounded.lean:48:35: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: S43/Sound/Unbounded.lean:50:76: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Unbounded.lean:50:96: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Unbounded.lean:50:109: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Unbounded.lean:50:76: Unused tactic linter: `(try split_ifs)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Unbounded.lean:50:96: Unused tactic linter: `simp_all` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Unbounded.lean:50:109: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Unbounded.lean:102:22: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Unbounded.lean:102:41: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Unbounded.lean:103:22: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Unbounded.lean:103:41: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Unbounded.lean:115:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Unbounded.lean:115:32: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Unbounded.lean:116:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Unbounded.lean:116:32: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Unbounded.lean:123:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Unbounded.lean:123:61: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Unbounded.lean:127:50: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [8995/9002] Built S43.Sound.Bridge (3.4s)
+warning: S43/Sound/Bridge.lean:168:77: Unused tactic linter: `subst_vars` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Bridge.lean:183:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:183:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:190:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:194:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:195:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:195:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:197:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:200:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:231:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:232:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:258:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:260:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:262:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:264:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:266:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:267:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:269:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:271:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Bridge.lean:273:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Bridge.lean:274:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [8996/9002] Built S43.Sound.Record (4.4s)
+warning: S43/Sound/Record.lean:81:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Record.lean:82:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Record.lean:162:57: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Record.lean:163:12: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Record.lean:162:49: Unused tactic linter: `done` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Record.lean:162:57: Unused tactic linter: `skip` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Record.lean:163:2: Unused tactic linter: `all_goals (simp only [Bool.or_eq_true, beq_iff_eq] at *; omega)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Record.lean:169:57: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Record.lean:170:12: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: S43/Sound/Record.lean:169:49: Unused tactic linter: `done` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Record.lean:169:57: Unused tactic linter: `skip` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Record.lean:170:2: Unused tactic linter: `all_goals (simp only [Bool.or_eq_true, beq_iff_eq] at *; omega)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Record.lean:177:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Record.lean:192:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Record.lean:192:41: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: S43/Sound/Record.lean:230:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Record.lean:230:48: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Record.lean:231:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Record.lean:231:46: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Record.lean:308:21: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Record.lean:317:21: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: S43/Sound/Record.lean:318:21: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: S43/Sound/Record.lean:256:2: Unused tactic linter: `all_goals try (simp at h; done)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+✔ [8997/9002] Built S43.Sound.Data (2.4s)
+⚠ [8998/9002] Built S43.Sound.Target (3.8s)
+warning: S43/Sound/Target.lean:84:4: Unused tactic linter: `all_goals try (simp at hv; done)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Target.lean:120:4: Unused tactic linter: `all_goals try (simp at hv; done)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [8999/9002] Built S43.Sound.Walk (3.4s)
+warning: S43/Sound/Walk.lean:30:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: S43/Sound/Walk.lean:55:4: Unused tactic linter: `all_goals try (simp at h; done)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Walk.lean:77:4: Unused tactic linter: `all_goals try (simp at h; done)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: S43/Sound/Walk.lean:108:4: Unused tactic linter: `all_goals try (simp at h; done)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+✔ [9000/9002] Built S43.Sound.Case (2.8s)
+⚠ [9001/9002] Built S43.Sound.MainProof (2.5s)
+warning: S43/Sound/MainProof.lean:76:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [9002/9002] Built S43Pilot.P80.Case (2.9s)
+Build completed successfully (9002 jobs).

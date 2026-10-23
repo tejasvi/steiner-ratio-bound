@@ -1,0 +1,3 @@
+records 12696761, nodes 25393394, n 7, id bytes 8
+leaves 12696761 (= records), internal 12696633, max depth 75, ids not in the tree 0
+OK COVER: the 12696761 record boxes tile the 128 root boxes (the domain [0,inf)^7)

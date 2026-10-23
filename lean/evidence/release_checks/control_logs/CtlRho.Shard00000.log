@@ -1,0 +1,11 @@
+✔ [21/22] Built S43Pilot.CtlRho.Skel (574ms)
+✖ [22/22] Building S43Pilot.CtlRho.Shard00000 (596ms)
+trace: .> LEAN_PATH=<PKGS>/Cli/.lake/build/lib/lean:<PKGS>/batteries/.lake/build/lib/lean:<PKGS>/Qq/.lake/build/lib/lean:<PKGS>/aesop/.lake/build/lib/lean:<PKGS>/proofwidgets/.lake/build/lib/lean:<PKGS>/importGraph/.lake/build/lib/lean:<PKGS>/LeanSearchClient/.lake/build/lib/lean:<PKGS>/plausible/.lake/build/lib/lean:<PKGS>/mathlib/.lake/build/lib/lean:<PKG>/.lake/build/lib/lean <ELAN>/toolchains/leanprover--lean4---v4.35.0-rc3/bin/lean <PKG>/S43Pilot/CtlRho/Shard00000.lean -o <PKG>/.lake/build/lib/lean/S43Pilot/CtlRho/Shard00000.olean -i <PKG>/.lake/build/lib/lean/S43Pilot/CtlRho/Shard00000.ilean -c <PKG>/.lake/build/ir/S43Pilot/CtlRho/Shard00000.c --setup <PKG>/.lake/build/ir/S43Pilot/CtlRho/Shard00000.setup.json --json
+error: S43Pilot/CtlRho/Shard00000.lean:10:70: Tactic `native_decide` evaluated that the proposition
+  S43.shardOKPar (S43.mkCase false 3) (S43.DI.ofRat 9 10) (S43.Codes.ofString skel) (S43.Codes.ofString shard00000) 0
+      14 =
+    true
+is false
+Some required targets logged failures:
+- S43Pilot.CtlRho.Shard00000
+error: build failed

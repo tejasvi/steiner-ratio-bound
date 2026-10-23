@@ -1,0 +1,9 @@
+start 2026-10-22T11:08:02Z d_regular f_le_d rho 2141/2500 records 95569010 n 6 cert f6d9d3173b3865a6 child d611a45b318b8038 indep43c 29c2874dba0d02a9 cover43 9f218cf6cbf99f90 splits 843b4d14c8143364
+cover rc 0
+chunks 48 unreadable 0 totals {'ok': 63854665, 'skip_sym': 0, 'skip_sub': 31714345, 'fail': 0, 'count': 95569010} records 95569010
+first failures []
+RESULT: ALL RECORDS PASS
+end 2026-10-22T11:23:37Z
+records 95569010, nodes 191137956, n 6, id bytes 8
+leaves 95569010 (= records), internal 95568946, max depth 51, ids not in the tree 0
+OK COVER: the 95569010 record boxes tile the 64 root boxes (the domain [0,inf)^6)

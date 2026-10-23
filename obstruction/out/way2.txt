@@ -1,0 +1,18 @@
+point (b,c,d,s,e) = 1.3656 1.10927 0.365604 1 0.171605, f := d: 255 generated (split, lemma) functions, 119 usable; ceiling rho* = 0.855986741241 at function 32 (split 48, lemma 0)
+  0.855986741241  function 32  split 48  lemma 0
+  0.855986060251  function 30  split 46  lemma 0
+  0.855985986275  function 33  split 49  lemma 0
+  0.855985976884  function 234  split 47  lemma 8
+  0.855985976884  function 139  split 47  lemma 2
+  0.855985976884  function 110  split 47  lemma 1
+  0.855985902908  function 235  split 50  lemma 8
+  0.855985902908  function 140  split 50  lemma 2
+point (b,c,d,s,e) = 1.34514 1.07421 0.347656 1.00391 0.167969, f := d: 255 generated (split, lemma) functions, 119 usable; ceiling rho* = 0.857134921267 at function 32 (split 48, lemma 0)
+  0.857134921267  function 32  split 48  lemma 0
+  0.857134811670  function 234  split 47  lemma 8
+  0.857134811670  function 139  split 47  lemma 2
+  0.857134811670  function 110  split 47  lemma 1
+  0.856771738052  function 30  split 46  lemma 0
+  0.856487584784  function 27  split 43  lemma 0
+  0.856487475270  function 232  split 42  lemma 8
+  0.856487475270  function 137  split 42  lemma 2

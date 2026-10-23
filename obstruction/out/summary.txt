@@ -1,0 +1,6 @@
+wstar way1 mode lin max 0.8559867412 split 48 lemma 0 uncertified 0
+wstar way1 mode none max 0.8804804950 split 151 lemma 5 uncertified 84
+wstar way1 max 0.8559867412 split 48 lemma 0 uncertified 0 | way3 bound 0.8559867412 combos 42303
+w1 way1 mode lin max 0.8571349213 split 48 lemma 0 uncertified 0
+w1 way1 mode none max 0.8807464698 split 151 lemma 5 uncertified 84
+w1 way1 max 0.8571349213 split 48 lemma 0 uncertified 0 | way3 bound 0.8571349213 combos 42303

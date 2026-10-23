@@ -1,0 +1,4 @@
+way 3 (all Definition-13 splittings, enum43 enumeration) at w1 = (b,c,d,s,e) = ['134514/100000', '107421/100000', '347656/1000000', '100391/100000', '167969/1000000'], f := d
+combinations enumerated 42303 (lemma set x V* x S- x S+, connectivity test passed, finite T*); with L(S-) - L(S+)_lower <= 0: 22437
+certified upper bound of the maximum critical rho over all combinations: 0.857134921266727
+  attained (as an upper bound) at lemma set 0, V* ('A', 'B'), S- (('A', 's'), ('B', 's'), ('s', 'r'), ('r', 'D'), ('r', 'P'), ('P', 'Q'), ('P', 'R')), S+ ('D', 'Q', 'R')

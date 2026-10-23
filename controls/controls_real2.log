@@ -1,0 +1,20 @@
+start 2026-10-22T13:59:22Z checker 90323b1736bec53c cover 9f218cf6cbf99f90
+tamper d_regular f_ge_dv: tampered 1002 old_split 37 new_split 38 (wanted: the changed split fails the vertex test F <= 0; candidates before it: 0 skipped by the checker's rules, 2 rejected structurally, 0 still valid)
+tamper d_steiner f_ge_d: tampered 1000 old_split 389 new_split 90 (wanted: the changed split fails the vertex test F <= 0; candidates before it: 0 skipped by the checker's rules, 0 rejected structurally, 0 still valid)
+tamper d_regular f_le_d: tampered 1384 old_split 126 new_split 127 (wanted: the changed split fails the vertex test F <= 0; candidates before it: 0 skipped by the checker's rules, 384 rejected structurally, 0 still valid)
+tamper d_steiner f_le_d: tampered 1002 old_split 841 new_split 92 (wanted: the changed split fails the vertex test F <= 0; candidates before it: 0 skipped by the checker's rules, 2 rejected structurally, 0 still valid)
+just-above d_regular f_ge_dv rho=2142/2500 first 2000000 records: {'count': 2000000, 'fail': 63574, 'ok': 1761107} first failure {'rec': 67, 'id': 3430, 'split': 43, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+just-above d_regular f_ge_dv rho=4283/5000 first 2000000 records: {'count': 2000000, 'fail': 34186, 'ok': 1790495} first failure {'rec': 67, 'id': 3430, 'split': 43, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+tamper slice d_regular f_ge_dv: untouched fail 0 ok 94576; tampered fail 1 ok 94575 fails [{'rec': 1002, 'id': 131453, 'split': 38, 'lemma': 0, 'why': 'vertex value not <= 0'}] -> AS EXPECTED
+just-above d_steiner f_ge_d rho=2142/2500 first 2000000 records: {'count': 2000000, 'fail': 129167, 'ok': 1870235} first failure {'rec': 19, 'id': 812, 'split': 95, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+just-above d_steiner f_ge_d rho=4283/5000 first 2000000 records: {'count': 2000000, 'fail': 86524, 'ok': 1912878} first failure {'rec': 19, 'id': 812, 'split': 95, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+tamper slice d_steiner f_ge_d: untouched fail 0 ok 100000; tampered fail 1 ok 99999 fails [{'rec': 1000, 'id': 160952, 'split': 90, 'lemma': 0, 'why': 'vertex value not <= 0'}] -> AS EXPECTED
+just-above d_regular f_le_d rho=2142/2500 first 2000000 records: {'count': 2000000, 'fail': 45891, 'ok': 1358462} first failure {'rec': 5, 'id': 274, 'split': 49, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+just-above d_regular f_le_d rho=4283/5000 first 2000000 records: {'count': 2000000, 'fail': 30819, 'ok': 1373534} first failure {'rec': 5, 'id': 274, 'split': 49, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+tamper slice d_regular f_le_d: untouched fail 0 ok 89971; tampered fail 1 ok 89970 fails [{'rec': 1384, 'id': 375221, 'split': 127, 'lemma': 0, 'why': 'vertex value not <= 0'}] -> AS EXPECTED
+just-above d_steiner f_le_d rho=2142/2500 first 2000000 records: {'count': 2000000, 'fail': 43417, 'ok': 1681591} first failure {'rec': 49, 'id': 2332, 'split': 1204, 'lemma': 2, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+just-above d_steiner f_le_d rho=4283/5000 first 2000000 records: {'count': 2000000, 'fail': 29122, 'ok': 1695886} first failure {'rec': 134, 'id': 10128, 'split': 1365, 'lemma': 0, 'why': 'vertex value not <= 0'} -> AS EXPECTED
+tamper slice d_steiner f_le_d: untouched fail 0 ok 96348; tampered fail 1 ok 96347 fails [{'rec': 1002, 'id': 100901, 'split': 92, 'lemma': 0, 'why': 'vertex value not <= 0'}] -> AS EXPECTED
+cover43 d_regular f_ge_dv with record 5000 dropped: records 10376822, nodes 20753582, n 6, id bytes 8 | FAIL: leaf without record | rc 1 -> AS EXPECTED
+CONTROLS SUMMARY: ALL AS EXPECTED
+CONTROLS DONE 2026-10-22T14:02:43Z

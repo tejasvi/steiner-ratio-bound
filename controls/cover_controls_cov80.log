@@ -1,0 +1,6 @@
+# coverage controls on a complete gen43f v2 certificate (d_regular f_ge_dv, rho 0.80; 427 records), cover43 9f218cf6 (ID64); 2026-10-22T12:15:37Z
+untouched.bin          rc 0  OK COVER: the 427 record boxes tile the 64 root boxes (the domain [0,inf)^6)
+dropped.bin            rc 1  FAIL: leaf without record
+altered_box.bin        rc 1  FAIL: leaf box mismatch
+duplicated.bin         rc 1  FAIL: duplicate record id
+COVER CONTROLS: ALL AS EXPECTED

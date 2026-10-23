@@ -1,0 +1,6 @@
+# The shard data of the four cases as deposited (tar packed with --owner=0 --group=0 --numeric-owner --sort=name --mtime=@0, then xz -9).
+# name  bytes  sha256  md5  |  tar sha256  tar bytes   (each unpacks to s/{skel.txt, ranges.txt, shard_NNNNN.txt}; place as data/Ck/s)
+data_C1.tar.xz 408264 346b87e8a57e4d32681ebb7b1fd76b7756033b2da7ccaa25136b6e69d642eaa0 1c659f15fc167d5e74be6c757ea01c84 | 5a384dfd2f146955d80453e45ca565bff008f789106e52d1b13c4ade76d7b5fb 41533440
+data_C2.tar.xz 965516 285f8306d4a7dd55a395b899cfec799350bce803656ab80ec8988e339bf3404c 936de4eae7692e05609d4d67d6f48fd4 | 30d987c0dd2e8e7240abc2a54b1a19e97350a38ed5c72fe0163dd35c74c8f13d 50821120
+data_C3.tar.xz 2674916 89e5cfeb44be3cc6f736cf4b4362ce33fd53c3e7d9ac2f4269a5e18becf5b2a0 458a9469c2921c8dd5b3b76f3265fa7a | 59aeab36dd285d4cca56bae1dc6f66bb0e0e51fbeef2b33b4879b0a0a97dbf47 382412800
+data_C4.tar.xz 13158976 74db656301c479124b2cba6c8415664e0707b532e923c430dce5bfe5b4868846 80bd20a47cf1d9e8b3024aefbcbc5c09 | f6c86c57d0894b24a865abdca4117f126a57d4e5f1ab4fa71448023ce620bdda 1746708480

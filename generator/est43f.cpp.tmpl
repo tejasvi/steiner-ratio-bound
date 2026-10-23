@@ -1,0 +1,313 @@
+// est43f.cpp: random-descent (Knuth) estimate of the size of the partition that gen43f would build, for pricing.
+// Same per-box decision as gen43f (a box is a leaf if it is outside the case domain or some split has F < -eps at every finite
+// corner, with the same monotonicity mask on infinite sides), same roots and split rule. A walk starts at a uniformly chosen root,
+// and at each internal box goes to a uniformly chosen child; with leaf depth D, 2^n * 2^D is an unbiased estimate of the number of
+// leaves (records). Heavy tails make the sample mean an underestimate in practice: report quantiles and the top-walk share too.
+// Includes the split formulas of arXiv:2601.22365 (MIT, Copyright (c) 2025-2026 Yisi Ke and Yankai Shu; LICENSE_PKU_MIT.txt).
+// Build: g++ est43f.cpp -O3 -std=c++23 -ffast-math -DFAM_STEINER=1|0 -DF_VAL=1|2|3; RHO_VAL substituted.
+// usage: est43f NWALKS SEED [MAXDEPTH=400] [TIMELIMIT_S=480]
+# include <bits/stdc++.h>
+# include <sys/mman.h>
+using namespace std;
+using ld = double;
+using ull = unsigned long long;
+const ld rho = RHO_VAL, INF = 1e18, eps = 1e-6, sqrt3 = sqrt(3.0l);
+#if FAM_STEINER
+const int NV = 8;   // b c d s u v e f
+const array<string, 8> allvars = {"b", "c", "d", "s", "u", "v", "e", "f"};
+#else
+const int NV = 6;   // b c d s e f
+const array<string, 6> allvars = {"b", "c", "d", "s", "e", "f"};
+#endif
+const int n = F_VAL == 2 ? NV - 1 : NV;   // f >= d: f := d is not a box variable
+const string suffix = format("_rho={}_{}.bin", rho, F_VAL == 1 ? "f_le_d"s : F_VAL == 2 ? "f_ge_d"s : "f_ge_dv"s);
+
+template<typename... Args>
+ld max(ld a, ld b, ld c, Args... args)
+{
+	return max({a, b, c, args...});
+}
+
+constexpr bool isinfinity(ld x)
+{
+	return bit_cast<ull>(x) == bit_cast<ull>(numeric_limits<ld>::infinity());
+}
+
+using Box = array<array<ld, 2>, n>;
+
+// full argument vector x (NV entries) of the split functions at box point p
+static inline void fullargs(const ld *p, ld *x)
+{
+	for(int i = 0; i < n; i++) x[i] = p[i];
+	if(F_VAL == 2) x[NV - 1] = p[2];   // f := d
+}
+
+static inline bool glob_cond(const ld *x)
+{
+#if FAM_STEINER
+	bool ok = max(x[4], x[5]) <= max(x[0], (ld)1);
+#else
+	bool ok = true;
+#endif
+	if(F_VAL == 1) ok = ok && x[NV - 1] <= x[2];
+	if(F_VAL == 3) ok = ok && x[NV - 1] >= x[2];   // f >= d with f a box variable (no f := d reduction)
+	return ok;
+}
+
+template<int>
+struct F;
+
+# include "formulas/F0"
+# include "formulas/F1"
+# include "formulas/F2"
+# include "formulas/F3"
+# include "formulas/F4"
+# include "formulas/F5"
+# include "formulas/F6"
+# include "formulas/F7"
+# include "formulas/F8"
+
+const int m = M8;
+
+using Fn = ld (*)(ull, const ld *);
+template<int I>
+ld callF(ull mono_mask, const ld *x)
+{
+#if FAM_STEINER
+	return F<I>{}(mono_mask, x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7]);
+#else
+	return F<I>{}(mono_mask, x[0], x[1], x[2], x[3], x[4], x[5]);
+#endif
+}
+template<int... I>
+constexpr array<Fn, sizeof...(I)> make_ftab(integer_sequence<int, I...>) { return {&callF<I>...}; }
+const auto ftab = make_ftab(make_integer_sequence<int, m>{});
+template<int... I>
+constexpr array<int, sizeof...(I)> make_sid(integer_sequence<int, I...>) { return {F<I>::split_id...}; }
+template<int... I>
+constexpr array<int, sizeof...(I)> make_lid(integer_sequence<int, I...>) { return {F<I>::lemma_id...}; }
+constexpr auto split_ids = make_sid(make_integer_sequence<int, m>{});
+constexpr auto lemma_ids = make_lid(make_integer_sequence<int, m>{});
+
+static vector<uint16_t> lastfail(m, 0);
+static const int MRU = 8;
+static array<int, MRU> mru = [] { array<int, MRU> a; a.fill(-1); return a; }();
+static vector<uint8_t> inmru(m, 0);
+static vector<array<ld, NV>> X;
+
+// 0 = split, 1 = certified, 2 = outside the domain
+static int decide(const Box &box)
+{
+	bool not_in_domain = true;
+	X.clear();
+	for(ull mask = 0; mask < 1ull << n; mask++)
+	{
+		ld p[NV], x[NV];
+		bool no_inf = true;
+		for(int i = 0; i < n; i++)
+		{
+			p[i] = (mask >> i) & 1 ? box[i][0] : box[i][1];
+			if(isinfinity(p[i])) no_inf = false;
+		}
+		fullargs(p, x);
+		if(no_inf) { array<ld, NV> a; for(int i = 0; i < NV; i++) a[i] = x[i]; X.push_back(a); }
+		if(glob_cond(x)) not_in_domain = false;
+	}
+	if(not_in_domain) return 2;
+	ull mono_mask = 0;
+	for(int i = 0; i < n; i++)
+		if(isinfinity(box[i][1])) mono_mask |= 1ull << i;
+	const int nc = X.size();
+	auto test = [&](int k) -> bool {
+		int start = lastfail[k]; if(start >= nc) start = 0;
+		for(int j = 0; j < nc; j++)
+		{
+			int c = start + j; if(c >= nc) c -= nc;
+			ld v = ftab[k](mono_mask, X[c].data());
+			if(!(v < -eps)) { lastfail[k] = c; return false; }
+		}
+		return true;
+	};
+	for(int q = 0; q < MRU; q++)
+		if(mru[q] >= 0 && test(mru[q]))
+		{
+			int f = mru[q];
+			for(int r = q; r > 0; r--) mru[r] = mru[r - 1];
+			mru[0] = f;
+			return 1;
+		}
+	for(int k = 0; k < m; k++)
+		if(!inmru[k] && test(k))
+		{
+			if(mru[MRU - 1] >= 0) inmru[mru[MRU - 1]] = 0;
+			for(int r = MRU - 1; r > 0; r--) mru[r] = mru[r - 1];
+			mru[0] = k; inmru[k] = 1;
+			return 1;
+		}
+	return 0;
+}
+
+int main(int argc, char **argv)
+{
+	long nwalk = argc > 1 ? atol(argv[1]) : 1000;
+	ull seed = argc > 2 ? strtoull(argv[2], 0, 10) : 1;
+	int maxdepth = argc > 3 ? atoi(argv[3]) : 400;
+	double tlimit = argc > 4 ? atof(argv[4]) : 480;
+	if(nwalk == 0)
+	{
+		// exact mode (validation): full depth-first count of leaves with the same decision, up to maxdepth
+		ull leaves = 0, outl = 0, internal = 0, cens = 0;
+		vector<pair<Box, int>> st;
+		for(ull mask = 0; mask < 1ull << n; mask++)
+		{
+			Box b;
+			for(int i = 0; i < n; i++)
+				if((mask >> i) & 1) b[i][0] = 1, b[i][1] = numeric_limits<ld>::infinity();
+				else b[i][0] = 0, b[i][1] = 1;
+			st.push_back({b, 0});
+		}
+		while(!st.empty())
+		{
+			auto [box, depth] = st.back(); st.pop_back();
+			int r = decide(box);
+			if(r == 2) { leaves++; outl++; continue; }
+			if(r == 1) { leaves++; continue; }
+			if(depth >= maxdepth) { cens++; continue; }
+			internal++;
+			auto dim = max_element(box.begin(), box.end(), [](auto &&x, auto &&y) {
+				ld sepx = isinfinity(x[1]) ? 1 / x[0] : x[1] - x[0];
+				ld sepy = isinfinity(y[1]) ? 1 / y[0] : y[1] - y[0];
+				return sepx < sepy;
+			}) - box.begin();
+			ld mid = isinfinity(box[dim][1]) ? 2 * box[dim][0] : (box[dim][0] + box[dim][1]) / 2;
+			Box l = box, r2 = box; l[dim][1] = mid; r2[dim][0] = mid;
+			st.push_back({r2, depth + 1}); st.push_back({l, depth + 1});
+		}
+		printf("exact: leaves %llu (out of domain %llu) internal %llu censored %llu\n", leaves, outl, internal, cens);
+		return 0;
+	}
+	if(nwalk < 0)
+	{
+		// population mode (unbiased sequential resampling): all children of every internal walker are kept, then the
+		// population is subsampled uniformly to the budget B with weights scaled by pop/B. Leaf and internal-node weights
+		// sum to unbiased estimates of the leaf and internal-node counts of the full tree.
+		long B = -nwalk;
+		mt19937_64 rng(seed);
+		struct Wk { Box box; long double w; };
+		vector<Wk> cur, nxt;
+		for(ull mask = 0; mask < 1ull << n; mask++)
+		{
+			Wk k; k.w = 1;
+			for(int i = 0; i < n; i++)
+				if((mask >> i) & 1) k.box[i][0] = 1, k.box[i][1] = numeric_limits<ld>::infinity();
+				else k.box[i][0] = 0, k.box[i][1] = 1;
+			cur.push_back(k);
+		}
+		long double leafw = 0, outw = 0, intw = 0, censw = 0; ull boxes = 0; int depth = 0;
+		vector<Wk> cens_boxes;
+		vector<long double> leafw_by_depth;
+		auto t0 = chrono::steady_clock::now(); bool timeout = false;
+		while(!cur.empty())
+		{
+			nxt.clear();
+			long double lw = 0;
+			for(auto &k : cur)
+			{
+				int r = decide(k.box); boxes++;
+				if(r == 2) { leafw += k.w; outw += k.w; lw += k.w; continue; }
+				if(r == 1) { leafw += k.w; lw += k.w; continue; }
+				if(depth >= maxdepth) { censw += k.w; cens_boxes.push_back(k); continue; }
+				intw += k.w;
+				auto dim = max_element(k.box.begin(), k.box.end(), [](auto &&x, auto &&y) {
+					ld sepx = isinfinity(x[1]) ? 1 / x[0] : x[1] - x[0];
+					ld sepy = isinfinity(y[1]) ? 1 / y[0] : y[1] - y[0];
+					return sepx < sepy;
+				}) - k.box.begin();
+				ld mid = isinfinity(k.box[dim][1]) ? 2 * k.box[dim][0] : (k.box[dim][0] + k.box[dim][1]) / 2;
+				Wk l = k, r2 = k; l.box[dim][1] = mid; r2.box[dim][0] = mid;
+				nxt.push_back(l); nxt.push_back(r2);
+			}
+			leafw_by_depth.push_back(lw);
+			if((long)nxt.size() > B)
+			{
+				long double scale = (long double)nxt.size() / B;
+				// uniform subsample without replacement (partial Fisher-Yates)
+				for(long i = 0; i < B; i++) { long j = i + (long)(rng() % (nxt.size() - i)); swap(nxt[i], nxt[j]); }
+				nxt.resize(B);
+				for(auto &k : nxt) k.w *= scale;
+			}
+			swap(cur, nxt);
+			depth++;
+			if(chrono::duration<double>(chrono::steady_clock::now() - t0).count() > tlimit) { timeout = true; break; }
+		}
+		double el = chrono::duration<double>(chrono::steady_clock::now() - t0).count();
+		long double pend = 0; for(auto &k : cur) pend += k.w;
+		if(cur.empty() && !cens_boxes.empty()) cur = cens_boxes;
+		printf("est43f-pop n %d m %d rho %.6f B %ld seed %llu maxdepth %d secs %.1f boxes %llu us/box %.2f depth_reached %d%s\n",
+		       n, m, (double)rho, B, seed, maxdepth, el, boxes, 1e6 * el / max<ull>(boxes, 1), depth, timeout ? " TIMEOUT" : "");
+		printf("leaves_est %.4Le  internal_est %.4Le  out-of-domain %.4Le  censored_w %.4Le  pending_w %.4Le\n", leafw, intw, outw, censw, pend);
+		{
+			// where the population ended: up to 12 of the walkers still pending (timeout) or the last level reached
+			int shown = 0;
+			for(auto &k : cur)
+			{
+				if(shown++ >= 12) break;
+				printf("pending box:");
+				for(int i = 0; i < n; i++) printf(" [%.6g, %.6g]", (double)k.box[i][0], (double)k.box[i][1]);
+				printf("\n");
+			}
+		}
+		printf("leaf weight by depth (every 4th):");
+		for(size_t d = 0; d < leafw_by_depth.size(); d += 4) printf(" %zu:%.2Le", d, leafw_by_depth[d]);
+		printf("\n");
+		return 0;
+	}
+	mt19937_64 rng(seed);
+	vector<int> depths; depths.reserve(nwalk);
+	long censored = 0, out_leaves = 0; ull boxes = 0;
+	auto t0 = chrono::steady_clock::now();
+	for(long w = 0; w < nwalk; w++)
+	{
+		if((w & 63) == 0 && chrono::duration<double>(chrono::steady_clock::now() - t0).count() > tlimit) break;
+		ull mask = rng() & ((1ull << n) - 1);
+		Box box;
+		for(int i = 0; i < n; i++)
+			if((mask >> i) & 1) box[i][0] = 1, box[i][1] = numeric_limits<ld>::infinity();
+			else box[i][0] = 0, box[i][1] = 1;
+		int depth = 0;
+		while(true)
+		{
+			int r = decide(box); boxes++;
+			if(r == 2) { out_leaves++; break; }
+			if(r == 1) break;
+			if(depth >= maxdepth) { censored++; break; }
+			auto dim = max_element(box.begin(), box.end(), [](auto &&x, auto &&y) {
+				ld sepx = isinfinity(x[1]) ? 1 / x[0] : x[1] - x[0];
+				ld sepy = isinfinity(y[1]) ? 1 / y[0] : y[1] - y[0];
+				return sepx < sepy;
+			}) - box.begin();
+			ld mid = isinfinity(box[dim][1]) ? 2 * box[dim][0] : (box[dim][0] + box[dim][1]) / 2;
+			if(rng() & 1) box[dim][0] = mid; else box[dim][1] = mid;
+			depth++;
+		}
+		depths.push_back(depth);
+	}
+	double el = chrono::duration<double>(chrono::steady_clock::now() - t0).count();
+	long N = depths.size();
+	// estimate of leaves: 2^n * mean(2^D), computed in long double
+	long double sum = 0, sum2 = 0;
+	vector<long double> contrib(N);
+	for(long i = 0; i < N; i++) { long double v = ldexpl(1.0L, depths[i]); contrib[i] = v; sum += v; sum2 += v * v; }
+	long double mean = sum / N, var = sum2 / N - mean * mean, se = sqrtl(max(var, (long double)0) / N);
+	vector<long double> cs = contrib; sort(cs.begin(), cs.end(), greater<long double>());
+	long double top = 0; long ntop = max(1L, N / 100); for(long i = 0; i < ntop; i++) top += cs[i];
+	vector<int> ds = depths; sort(ds.begin(), ds.end());
+	auto q = [&](double p) { return ds[min<long>(N - 1, (long)(p * N))]; };
+	long double scale = ldexpl(1.0L, n);
+	printf("est43f n %d m %d rho %.6f walks %ld (asked %ld) seed %llu maxdepth %d secs %.1f boxes %llu us/box %.2f\n",
+	       n, m, (double)rho, N, nwalk, seed, maxdepth, el, boxes, 1e6 * el / max<ull>(boxes, 1));
+	printf("leaves_est %.4Le  se %.3Le  (rel se %.3f)  top1%%-walk share %.3f  censored %ld  out-of-domain leaves %ld\n",
+	       scale * mean, scale * se, (double)(se / mean), (double)(top / sum), censored, out_leaves);
+	printf("depth quantiles: min %d 10%% %d 50%% %d 90%% %d 99%% %d 99.9%% %d max %d\n", ds[0], q(0.1), q(0.5), q(0.9), q(0.99), q(0.999), ds[N - 1]);
+	return 0;
+}

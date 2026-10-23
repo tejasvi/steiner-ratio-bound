@@ -1,0 +1,162 @@
+#ifndef NET4_IT
+#define NET4_IT 60
+#endif
+// NET4: 4-point S+ by an explicit two-Steiner-point network for the lemma's pairing (valid for every f; no topology lemma)
+namespace __net4 {
+struct V2 { double x, y; };
+static inline double nrm(V2 a, V2 b) { return std::sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)); }
+static inline V2 wz(V2 p, V2 q, V2 r, V2 x) {
+    double rp = nrm(p,x), rq = nrm(q,x), rr = nrm(r,x);
+    if(rp < 1e-14) return p; if(rq < 1e-14) return q; if(rr < 1e-14) return r;
+    double den = 1/rp + 1/rq + 1/rr;
+    return { (p.x/rp + q.x/rq + r.x/rr)/den, (p.y/rp + q.y/rq + r.y/rr)/den };
+}
+static inline double pairnet(V2 a, V2 b, V2 c, V2 d) {
+    // explicit network for the pairing ab|cd; any iteration count gives an upper bound of SMT4 (the verifier's 3000-iteration
+    // network is at least as short, so a record the generator certifies stays certifiable)
+    V2 x{(a.x+b.x)/2, (a.y+b.y)/2}, y{(c.x+d.x)/2, (c.y+d.y)/2};
+    for(int i = 0; i < NET4_IT; i++) { x = wz(a, b, y, x); y = wz(c, d, x, y); }
+    return nrm(a,x) + nrm(b,x) + nrm(x,y) + nrm(c,y) + nrm(d,y);
+}
+// lower bound of SMT4(a,b,c,d): the largest 3-point Steiner length among the four triples (removing a terminal cannot lengthen an SMT)
+static inline double smt3(V2 a, V2 b, V2 c) {
+    double ab = nrm(a,b), bc = nrm(b,c), ca = nrm(c,a);
+    auto cosang = [](double s1, double s2, double opp) { return (s1*s1 + s2*s2 - opp*opp) / (2*s1*s2); };
+    if(ab == 0 || ca == 0 || bc == 0) return std::max({ab, bc, ca});   // two points coincide
+    if(cosang(ab, ca, bc) <= -0.5) return ab + ca;
+    if(cosang(ab, bc, ca) <= -0.5) return ab + bc;
+    if(cosang(bc, ca, ab) <= -0.5) return bc + ca;
+    double S = std::fabs((b.x-a.x)*(c.y-a.y) - (b.y-a.y)*(c.x-a.x)) / 2;
+    return std::sqrt((ab*ab + bc*bc + ca*ca)/2 + 2*std::sqrt(3.0)*S);
+}
+static inline double lb4(V2 a, V2 b, V2 c, V2 d) { return std::max({smt3(a,b,c), smt3(a,b,d), smt3(a,c,d), smt3(b,c,d)}); }
+struct Pts { V2 A, B, D, Q, R; };
+static inline Pts pts(double b, double c, double d, double s, double e, double f) {
+    const double h = std::sqrt(3.0)/2;
+    V2 S{1,0}; V2 B{1 + b/2, b*h}; V2 r{1 + s/2, -s*h}; V2 P{r.x - c/2, r.y - c*h};
+    return { V2{0,0}, B, V2{r.x + d, r.y}, V2{P.x + f/2, P.y - f*h}, V2{P.x - e, P.y} };
+}
+static inline double L3(double b, double c, double d, double s, double e, double f) { auto p = pts(b,c,d,s,e,f); return pairnet(p.A, p.R, p.D, p.Q); }
+static inline double L4(double b, double c, double d, double s, double e, double f) { auto p = pts(b,c,d,s,e,f); return pairnet(p.A, p.D, p.Q, p.R); }
+static inline double L6(double b, double c, double d, double s, double e, double f) { auto p = pts(b,c,d,s,e,f); return pairnet(p.B, p.D, p.Q, p.R); }
+static inline double L7(double b, double c, double d, double s, double e, double f) { return L4(b,c,d,s,e,f); }
+static inline double L3lb(double b, double c, double d, double s, double e, double f) { auto p = pts(b,c,d,s,e,f); return lb4(p.A, p.R, p.D, p.Q); }
+static inline double L4lb(double b, double c, double d, double s, double e, double f) { auto p = pts(b,c,d,s,e,f); return lb4(p.A, p.D, p.Q, p.R); }
+static inline double L6lb(double b, double c, double d, double s, double e, double f) { auto p = pts(b,c,d,s,e,f); return lb4(p.B, p.D, p.Q, p.R); }
+static inline double L7lb(double b, double c, double d, double s, double e, double f) { return L4lb(b,c,d,s,e,f); }
+}
+namespace __f3_detail {
+bool steiner_cond(double b, double c, double d, double s, double e) {
+	const double k = std::sqrt(3.0)/2.0;
+	// Helper: bound g(c,d,s) from Mathematica reduction of dot(AV,AR) >= 0
+	auto g_bound = [](double c, double d, double s) {
+	    double num = 2.0 + c*c + 3.0*d + 2.0*s + 3.0*c*s + 3.0*d*s + 2.0*s*s;
+	    double den = 2.0 + c + 3.0*d + s;
+	    return num / den;
+	};
+
+    // Nonnegativity
+    if (b < 0 || c < 0 || d < 0 || s < 0 || e < 0) return false;
+
+    // Simple linear bounds on e
+    if (e + c < 1.0) return false;
+    if (e > s + c + d + 2.0) return false;
+    if (e < 2.0 - c - d + s) return false;
+
+    // Auxiliary monotone bound on e (from Reduce on dot(AV,AR) >= 0)
+    if (e > g_bound(c, d, s)) return false;
+    if (e > 3.0*s) return false;
+
+    // Angle constraints at D and Q (stronger <=90° form via dot>=0)
+    // dot(DU, DQ) >= 0
+    double dot_D = (c + d) * (1.0 - 0.5*e + 0.5*s + 0.5*c + 0.5*d);
+    if (dot_D < 0.0) return false;
+
+    // dot(QU, QD) >= 0
+    double dot_Q = (c + d) * (-1.0 + 0.5*e - 0.5*s + 0.5*c + 0.5*d);
+    if (dot_Q < 0.0) return false;
+
+    // Intersection angle <=120° between RD and AQ: 2*dot + |RD||AQ| >= 0
+    {
+        double RDx = d + c/2.0 + e;
+        double RDy = k*c;
+        double AQx = 1.0 + s/2.0 - c/2.0 + d/2.0;
+        double AQy = -k*(s + c + d);
+        double dot3 = RDx*AQx + RDy*AQy;
+        double expr3 = 2.0*dot3 + std::hypot(RDx, RDy)*std::hypot(AQx, AQy);
+        if (expr3 < 0.0) return false;
+    }
+
+    // Angle at R (<=120°): 2*dot(RV,RA) + |RV||RA| >= 0
+    {
+        double RAx = e - 1.0 - s/2.0 + c/2.0;
+        double RAy = k*(s + c);
+        double RVx = 1.5*d + c + e;
+        double RVy = -k*d;
+        double dotR = RAx*RVx + RAy*RVy;
+        double exprR = 2.0*dotR + std::hypot(RAx, RAy)*std::hypot(RVx, RVy);
+        if (exprR < 0.0) return false;
+    }
+
+    // Angle at A (<=120°): 2*dot(AV,AR) + |AV||AR| >= 0
+    {
+        double AVx = 1.0 + s/2.0 + 1.5*d + c/2.0;
+        double AVy = -k*(s + c + d);
+        double ARx = 1.0 + (s - c)/2.0 - e;
+        double ARy = -k*(s + c);
+        double dotA = AVx*ARx + AVy*ARy;
+        double exprA = 2.0*dotA + std::hypot(AVx, AVy)*std::hypot(ARx, ARy);
+        if (exprA < 0.0) return false;
+    }
+
+    // Convexity: the three easy cross-product tests are automatic under nonnegativity.
+    // The fourth (QR × RA ≤ 0) is ensured by e + c ≥ 1 (already checked).
+    return true;
+}
+
+double steiner_length(double b, double c, double d, double s, double e) {
+	const double k = std::sqrt(3.0)/2.0;
+    // |UV| with U and V computed in closed form:
+    // U = (0.5 - 0.5e - 0.5s - c, k*(e - 1 - s))
+    // V = (1 + 0.5s + 1.5d + 0.5c, -k*(s + c + d))
+    double UVx = 0.5 + 0.5*e + 1.5*d + s + 1.5*c;
+    double UVy = -k*(c + d + e - 1.0);
+    return std::hypot(UVx, UVy);
+}
+
+}
+template<> struct F<160> {
+constexpr static int split_id = 34;
+constexpr static int lemma_id = 3;
+ld operator()(ull mono_mask, ld b, ld c, ld d, ld s, ld e, ld f) {
+if((mono_mask & FMASK3) != 0) return INF;   // unbounded f allowed in F_VAL 3 (extension argument; PQ in S-)
+ld L_s_minus = b + c + d + e + f + s + 1;
+ld L_t = sqrt(b*b + b + 1);
+ld L_s_plus;
+if(F_VAL == 2) { if(!__f3_detail::steiner_cond(b, c, d, s, e)) return INF; else L_s_plus = __f3_detail::steiner_length(b, c, d, s, e); }
+else {
+#ifdef NET4_PREFILTER
+{ double lbv = rho*L_t + __net4::L3lb(b, c, d, s, e, f) - L_s_minus; if(!(lbv < -eps)) return lbv; }
+#endif
+L_s_plus = __net4::L3(b, c, d, s, e, f); }
+return rho*L_t + L_s_plus - L_s_minus;
+}};
+
+template<> struct F<161> {
+constexpr static int split_id = 35;
+constexpr static int lemma_id = 3;
+ld operator()(ull mono_mask, ld b, ld c, ld d, ld s, ld e, ld f) {
+if((mono_mask & FMASK3) != 0) return INF;   // unbounded f allowed in F_VAL 3 (extension argument; PQ in S-)
+ld L_s_minus = b + c + d + e + f + s + 1;
+ld L_t = sqrt(b*b - b*d + b*s + d*d + d*s + s*s);
+ld L_s_plus;
+if(F_VAL == 2) { if(!__f3_detail::steiner_cond(b, c, d, s, e)) return INF; else L_s_plus = __f3_detail::steiner_length(b, c, d, s, e); }
+else {
+#ifdef NET4_PREFILTER
+{ double lbv = rho*L_t + __net4::L3lb(b, c, d, s, e, f) - L_s_minus; if(!(lbv < -eps)) return lbv; }
+#endif
+L_s_plus = __net4::L3(b, c, d, s, e, f); }
+return rho*L_t + L_s_plus - L_s_minus;
+}};
+
+const int M3 = 162;

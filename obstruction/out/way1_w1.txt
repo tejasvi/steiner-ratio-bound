@@ -1,0 +1,16 @@
+way 1 (published family) at w1 = (b,c,d,s,e) = ['134514/100000', '107421/100000', '347656/1000000', '100391/100000', '167969/1000000'], f := d; rho0 = 8572/10000
+pairs evaluated 1422 (158 splits x 9 lemma ids); usable (condition not certainly false) 527; of these with the condition certainly true 527
+max critical rho over usable pairs: in [0.857134921267, 0.857134921267] at split 48 (1-based line of d_regular_splits.txt), lemma 0
+top 10 pairs (critical rho enclosure, split, lemma, condition certainly true):
+  [0.857134921267, 0.857134921267]  split 48  lemma 0  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 1  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 2  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 3  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 4  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 5  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 6  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 7  True
+  [0.857134921267, 0.857134921267]  split 48  lemma 8  True
+  [0.857134811670, 0.857134811670]  split 47  lemma 1  True
+pairs without a certified F(w, rho0) > 0: 0 []
+RESULT: OBSTRUCTION CERTIFIED: every usable pair has F(w, rho0) > 0, so no box containing w can be certified at rho0 by this family

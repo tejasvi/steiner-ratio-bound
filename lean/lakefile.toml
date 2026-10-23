@@ -1,0 +1,49 @@
+name = "Steiner43a"
+version = "0.1.0"
+defaultTargets = ["S43Core"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+# one elaboration thread (lower memory use)
+Elab.async = false
+
+# Lean check of the Steiner-ratio certificate rho_S >= 2141/2500. Toolchain v4.35.0-rc3, Mathlib v4.35.0-rc3.
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+# The certificate checker: core Lean only, precompiled so that native_decide runs native code.
+[[lean_lib]]
+name = "S43Core"
+roots = ["S43Core.Interval", "S43Core.Geom", "S43Core.Splits", "S43Core.Vertex", "S43Core.Check", "S43Core.Tree"]
+precompileModules = true
+
+# Statements and (later) soundness proofs: Mathlib.
+[[lean_lib]]
+name = "S43"
+globs = ["S43.+"]
+
+[[lean_exe]]
+name = "s43check"
+root = "S43Core.Main"
+
+[[lean_exe]]
+name = "s43tree"
+root = "S43Core.TreeMain"
+
+
+# Data loader and the pilot case (rho 4/5 certificate of d_regular f_ge_dv, 427 records).
+[[lean_lib]]
+name = "S43Data"
+globs = ["S43Data.+"]
+
+[[lean_lib]]
+name = "S43Pilot"
+globs = ["S43Pilot.+"]
+
+# The final theorems (imports the four case modules).
+[[lean_lib]]
+name = "S43Final"
+roots = ["S43Final"]

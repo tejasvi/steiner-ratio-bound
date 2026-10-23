@@ -1,0 +1,6 @@
+start 2026-10-22T11:23:37Z host <host> nproc 96 fam d_steiner sub f_le_d rho 0.8564 threads 95 src 3191d5f100d2b2c4 formulas 18bc4055a3752925
+
+real	0m34.128s
+user	0m33.819s
+sys	0m0.306s
+rc 0 2026-10-22T11:34:18Z

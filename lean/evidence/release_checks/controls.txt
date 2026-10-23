@@ -1,0 +1,12 @@
+CtlRho.Shard00000 rc 1 1 native_decide-false
+CtlRho.Shard00001 rc 1 1 native_decide-false
+CtlRho.Shard00002 rc 1 1 native_decide-false
+CtlRho.Shard00003 rc 1 1 native_decide-false
+CtlTamper.Shard00000 rc 0 0 native_decide-false
+CtlTamper.Shard00001 rc 1 1 native_decide-false
+CtlTamper.Shard00002 rc 0 0 native_decide-false
+CtlTamper.Shard00003 rc 0 0 native_decide-false
+CtlDrop.Shard00000 rc 0 0 native_decide-false
+CtlDrop.Shard00001 rc 0 0 native_decide-false
+CtlDrop.Shard00002 rc 0 0 native_decide-false
+CtlDrop.Shard00003 rc 1 1 native_decide-false

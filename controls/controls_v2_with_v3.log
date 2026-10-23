@@ -1,0 +1,17 @@
+# controls_v2.py with checker v3 (90323b1736bec53c) and old checker b7e3ac4f; inputs: depth-32 capped gen43f v2 certificates at 0.8564 (rg f_ge_dv, rg f_le_d); run 2026-10-22T12:15:26Z on another machine
+found: {'Y2': True, 'X2': True, 'ext': True, 'net4': True} plain 2000
+baseline Y2 record (f_ge_dv, 2141/2500)                        expect pass ok 1 fail 0    [AS EXPECTED]
+baseline X2 record (f_ge_dv, 2141/2500)                        expect pass ok 1 fail 0    [AS EXPECTED]
+baseline unbounded-f extension record (f_ge_dv, 2141/2500)     expect pass ok 1 fail 0    [AS EXPECTED]
+baseline 4-point NET4 record (f_ge_dv, 2141/2500)              expect pass ok 1 fail 0    [AS EXPECTED]
+same records at 2141/2500                                      expect pass ok 2004 fail 0    [AS EXPECTED]
+just-above claim 2142/2500 (0.8568)                            expect fail ok 1702 fail 302  vertex value not <= 0  [AS EXPECTED]
+just-above claim 4283/5000 (0.8566)                            expect fail ok 1930 fail 74  vertex value not <= 0  [AS EXPECTED]
+tampered record: split id changed                              expect fail ok 0 fail 1  vertex value not <= 0  [AS EXPECTED]
+Y2 record with f made unbounded                                expect fail ok 0 fail 1  unbounded f needs a split without a Y edge and with Q in S+ => PQ in S-  [AS EXPECTED]
+Y2 record with its f range stretched to >= 4 d (Psi <= 0)      expect fail ok 0 fail 1  lemma condition fails  [AS EXPECTED]
+4-point record with NET4=0 (lemma formula off f = d)           expect fail ok 0 fail 1  |S+| > 3 away from f = d needs NET4  [AS EXPECTED]
+unbounded-f record whose split loses PQ from S- (Q in S+)      expect fail ok 0 fail 1  unbounded f needs a split without a Y edge and with Q in S+ => PQ in S-  [AS EXPECTED]
+X2 record (f_le_d) with the v2 verifier                        expect pass ok 1 fail 0    [AS EXPECTED]
+X2 record (f_le_d) with the OLD verifier b7e3ac4f              expect fail ok 0 fail 1  lemma condition fails  [AS EXPECTED]
+CONTROLS: ALL AS EXPECTED

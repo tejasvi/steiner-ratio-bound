@@ -1,0 +1,385 @@
+// gen43f.cpp: fast partition generator for the Steiner-ratio certificates of arXiv:2601.22365 (Ke, Huang, Shu, He, Gai, Wang).
+// Derived from their certificate/d_*/plot_f_*.cpp. Original code: MIT licence, Copyright (c) 2025-2026 Yisi Ke and Yankai Shu
+// (full notice in LICENSE_PKU_MIT.txt, which must accompany this file).
+// Changes (2026-10-22):
+//  1. A box is certified by the FIRST split found with F < -eps at every corner. This is the original's decision (its argmin split
+//     has max < -eps iff some split has), so the tree is the same; only the recorded split may differ. Recently successful splits
+//     are tried first, and a split is abandoned at its first failing corner (starting from the corner where it failed last time).
+//  2. Depth-first processing per thread, with work donation to idle threads, instead of one locked FIFO queue.
+//  3. 32-bit ids from an atomic counter with a hard stop before overflow (the original's `int ID` overflows at 2^31).
+// Same domain, roots, corner/monotonicity semantics, split rule and output format (certificate + child files) as the original.
+// Optional 2nd argument MAXDEPTH: a box at depth >= MAXDEPTH that no split certifies is not split but written to unproven.bin
+// (int32 depth, n x (lo, hi), double g = min over splits of F at the box centre, int32 argmin split index; centre of an infinite
+// side [lo, inf] = 2 lo); such a run is NOT a certificate (the checkers reject it). Depth histograms go to stdout.
+// With -DID64 the ids in both files are 64-bit (records: uint64 id, boxes, split, lemma; child file: uint64 pairs), for trees
+// above 2^32 nodes; the checkers have matching ID64 builds.
+// Build: g++ gen43f.cpp -O3 -pthread -std=c++23 -ffast-math -DFAM_STEINER=1|0 -DF_VAL=2|1|3 (2: f >= d with f := d, 1: f <= d, 3: f >= d with f a
+// box variable); 0.8564 substituted.
+# include <bits/stdc++.h>
+# include <sys/mman.h>
+using namespace std;
+using ld = double;
+using ull = unsigned long long;
+const ld rho = 0.8564, INF = 1e18, eps = 1e-6, sqrt3 = sqrt(3.0l);
+#if FAM_STEINER
+const int NV = 8;   // b c d s u v e f
+const array<string, 8> allvars = {"b", "c", "d", "s", "u", "v", "e", "f"};
+#else
+const int NV = 6;   // b c d s e f
+const array<string, 6> allvars = {"b", "c", "d", "s", "e", "f"};
+#endif
+const int n = F_VAL == 2 ? NV - 1 : NV;   // f >= d: f := d is not a box variable
+const string suffix = format("_rho={}_{}.bin", rho, F_VAL == 1 ? "f_le_d"s : F_VAL == 2 ? "f_ge_d"s : "f_ge_dv"s);
+
+template<typename... Args>
+ld max(ld a, ld b, ld c, Args... args)
+{
+	return max({a, b, c, args...});
+}
+
+constexpr bool isinfinity(ld x)
+{
+	return bit_cast<ull>(x) == bit_cast<ull>(numeric_limits<ld>::infinity());
+}
+
+using Box = array<array<ld, 2>, n>;
+
+// full argument vector x (NV entries) of the split functions at box point p
+static inline void fullargs(const ld *p, ld *x)
+{
+	for(int i = 0; i < n; i++) x[i] = p[i];
+	if(F_VAL == 2) x[NV - 1] = p[2];   // f := d
+}
+
+static inline bool glob_cond(const ld *x)
+{
+#if FAM_STEINER
+	bool ok = max(x[4], x[5]) <= max(x[0], (ld)1);
+#else
+	bool ok = true;
+#endif
+	if(F_VAL == 1) ok = ok && x[NV - 1] <= x[2];
+	if(F_VAL == 3) ok = ok && x[NV - 1] >= x[2];   // f >= d with f a box variable (no f := d reduction)
+	return ok;
+}
+
+template<int>
+struct F;
+
+# include "formulas/F0"
+# include "formulas/F1"
+# include "formulas/F2"
+# include "formulas/F3"
+# include "formulas/F4"
+# include "formulas/F5"
+# include "formulas/F6"
+# include "formulas/F7"
+# include "formulas/F8"
+
+const int m = M8;
+
+using Fn = ld (*)(ull, const ld *);
+template<int I>
+ld callF(ull mono_mask, const ld *x)
+{
+#if FAM_STEINER
+	return F<I>{}(mono_mask, x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7]);
+#else
+	return F<I>{}(mono_mask, x[0], x[1], x[2], x[3], x[4], x[5]);
+#endif
+}
+template<int... I>
+constexpr array<Fn, sizeof...(I)> make_ftab(integer_sequence<int, I...>) { return {&callF<I>...}; }
+const auto ftab = make_ftab(make_integer_sequence<int, m>{});
+template<int... I>
+constexpr array<int, sizeof...(I)> make_sid(integer_sequence<int, I...>) { return {F<I>::split_id...}; }
+template<int... I>
+constexpr array<int, sizeof...(I)> make_lid(integer_sequence<int, I...>) { return {F<I>::lemma_id...}; }
+constexpr auto split_ids = make_sid(make_integer_sequence<int, m>{});
+constexpr auto lemma_ids = make_lid(make_integer_sequence<int, m>{});
+
+#ifdef ID64
+using idt = uint64_t;
+const uint64_t ID_CAP = 16000000000ull;
+#else
+using idt = uint32_t;
+const uint64_t ID_CAP = 0xFFFFFF00ull;
+#endif
+struct Task { idt id; uint16_t depth; Box box; };
+
+mutex gmut;
+condition_variable gcv;
+deque<Task> gq;
+int idle = 0, nthreads = 1;
+bool done = false;
+atomic<int> idle_flag{0};
+atomic<uint64_t> next_id{0}, n_iter{0}, n_cert{0}, n_out{0};
+atomic<bool> capped{false}, write_err{false};
+int maxdepth = 1000;
+atomic<int> max_depth_seen{0};
+atomic<uint64_t> n_unproven{0}, n_unproven_pos{0};
+mutex hmut;
+array<uint64_t, 1024> hist_leaf{}, hist_int{}, hist_unp{};
+double g_max = -1e300;
+pair<idt, idt> *child;   // child[id] = (left, right); (0, 0) = leaf
+
+bool get_work(vector<Task> &st)
+{
+	unique_lock lk(gmut);
+	while(gq.empty() && !done)
+	{
+		idle++; idle_flag.store(idle);
+		if(idle == nthreads) { done = true; gcv.notify_all(); return false; }
+		gcv.wait(lk);
+		idle--; idle_flag.store(idle);
+	}
+	if(done) return false;
+	size_t take = max<size_t>(1, gq.size() / (2 * (size_t)nthreads));
+	for(size_t i = 0; i < take; i++) { st.push_back(move(gq.front())); gq.pop_front(); }
+	return true;
+}
+
+void donate(vector<Task> &st)
+{
+	size_t k = st.size() / 2;
+	{
+		lock_guard lk(gmut);
+		for(size_t i = 0; i < k; i++) gq.push_back(move(st[i]));
+	}
+	st.erase(st.begin(), st.begin() + k);
+	gcv.notify_all();
+}
+
+// g at the centre of a box: min over all splits of F (no monotonicity restriction), and its argmin; -1e300 if the centre is outside
+// the case domain
+static double centre_g(const Box &box, int &arg)
+{
+	ld p[NV], x[NV];
+	for(int i = 0; i < n; i++) p[i] = isinfinity(box[i][1]) ? 2 * box[i][0] : (box[i][0] + box[i][1]) / 2;
+	fullargs(p, x);
+	arg = -1;
+	if(!glob_cond(x)) return -1e300;
+	double g = 1e300;
+	for(int k = 0; k < m; k++) { ld v = ftab[k](0, x); if(v < g) { g = v; arg = k; } }
+	return g;
+}
+
+void worker(int tid, string recpath)
+{
+	FILE *fo = fopen(recpath.c_str(), "wb");
+	if(!fo) { perror("fopen"); exit(2); }
+	vector<char> obuf(1 << 22);
+	setvbuf(fo, obuf.data(), _IOFBF, obuf.size());
+	vector<Task> st;
+	vector<uint16_t> lastfail(m, 0);
+	const int MRU = 8;
+	array<int, MRU> mru; mru.fill(-1);
+	vector<uint8_t> inmru(m, 0);
+	vector<array<ld, NV>> X; X.reserve(1 << n);
+	uint64_t local_iter = 0, local_cert = 0, local_out = 0;
+	array<uint64_t, 1024> hl{}, hi_{}, hu{};
+	double gmax_local = -1e300;
+	FILE *fu = nullptr;
+	while(true)
+	{
+		if(st.empty() && !get_work(st)) break;
+		Task t = move(st.back()); st.pop_back();
+		local_iter++;
+		if((local_iter & 255) == 0)
+		{
+			n_iter += 256; n_cert += local_cert; n_out += local_out; local_cert = local_out = 0;
+			if(idle_flag.load(memory_order_relaxed) > 0 && st.size() >= 2) donate(st);
+			if(capped.load(memory_order_relaxed)) break;
+		}
+		const Box &box = t.box;
+		bool not_in_domain = true;
+		X.clear();
+		for(ull mask = 0; mask < 1ull << n; mask++)
+		{
+			ld p[NV], x[NV];
+			bool no_inf = true;
+			for(int i = 0; i < n; i++)
+			{
+				p[i] = (mask >> i) & 1 ? box[i][0] : box[i][1];
+				if(isinfinity(p[i])) no_inf = false;
+			}
+			fullargs(p, x);
+			if(no_inf) { array<ld, NV> a; for(int i = 0; i < NV; i++) a[i] = x[i]; X.push_back(a); }
+			if(glob_cond(x)) not_in_domain = false;
+		}
+		int32_t sid = -1, lid = -1;
+		bool cert = false;
+		if(not_in_domain) { cert = true; local_out++; }
+		else
+		{
+			ull mono_mask = 0;
+			for(int i = 0; i < n; i++)
+				if(isinfinity(box[i][1])) mono_mask |= 1ull << i;
+			const int nc = X.size();
+			auto test = [&](int k) -> bool {
+				int start = lastfail[k]; if(start >= nc) start = 0;
+				for(int j = 0; j < nc; j++)
+				{
+					int c = start + j; if(c >= nc) c -= nc;
+					ld v = ftab[k](mono_mask, X[c].data());
+					if(!(v < -eps)) { lastfail[k] = c; return false; }
+				}
+				return true;
+			};
+			int found = -1;
+			for(int q = 0; q < MRU && found < 0; q++)
+				if(mru[q] >= 0 && test(mru[q]))
+				{
+					found = mru[q];
+					for(int r = q; r > 0; r--) mru[r] = mru[r - 1];
+					mru[0] = found;
+				}
+			for(int k = 0; k < m && found < 0; k++)
+				if(!inmru[k] && test(k))
+				{
+					found = k;
+					if(mru[MRU - 1] >= 0) inmru[mru[MRU - 1]] = 0;
+					for(int r = MRU - 1; r > 0; r--) mru[r] = mru[r - 1];
+					mru[0] = k; inmru[k] = 1;
+				}
+			if(found >= 0) { cert = true; sid = split_ids[found]; lid = lemma_ids[found]; }
+		}
+		if(cert)
+		{
+			local_cert++; hl[t.depth]++;
+			fwrite(&t.id, sizeof(idt), 1, fo);
+			for(int i = 0; i < n; i++) { fwrite(&box[i][0], sizeof(ld), 1, fo); fwrite(&box[i][1], sizeof(ld), 1, fo); }
+			fwrite(&sid, 4, 1, fo); fwrite(&lid, 4, 1, fo);
+			continue;
+		}
+		if(t.depth >= maxdepth)
+		{
+			int arg; double g = centre_g(box, arg);
+			if(!fu) { fu = fopen(format("unp_t{:03d}.part", tid).c_str(), "wb"); if(!fu) { perror("fopen"); exit(2); } }
+			int32_t dd = t.depth, aa = arg;
+			fwrite(&dd, 4, 1, fu);
+			for(int i = 0; i < n; i++) { fwrite(&box[i][0], sizeof(ld), 1, fu); fwrite(&box[i][1], sizeof(ld), 1, fu); }
+			fwrite(&g, sizeof(double), 1, fu); fwrite(&aa, 4, 1, fu);
+			hu[t.depth]++; n_unproven++; if(g > 0) n_unproven_pos++;
+			gmax_local = max(gmax_local, g);
+			continue;
+		}
+		hi_[t.depth]++;
+		{ int dd = t.depth + 1, cur = max_depth_seen.load(memory_order_relaxed); while(dd > cur && !max_depth_seen.compare_exchange_weak(cur, dd)); }
+		auto dim = max_element(box.begin(), box.end(), [](auto &&x, auto &&y) {
+			ld sepx = isinfinity(x[1]) ? 1 / x[0] : x[1] - x[0];
+			ld sepy = isinfinity(y[1]) ? 1 / y[0] : y[1] - y[0];
+			return sepx < sepy;
+		}) - box.begin();
+		Task l{0, (uint16_t)(t.depth + 1), box}, r{0, (uint16_t)(t.depth + 1), box};
+		if(isinfinity(box[dim][1])) l.box[dim][1] = r.box[dim][0] = 2 * box[dim][0];
+		else l.box[dim][1] = r.box[dim][0] = (box[dim][0] + box[dim][1]) / 2;
+		uint64_t a = next_id.fetch_add(2);
+		if(a + 1 >= ID_CAP) { capped = true; break; }
+		l.id = (idt)a; r.id = (idt)(a + 1);
+		child[t.id] = {l.id, r.id};
+		st.push_back(move(r));
+		st.push_back(move(l));
+	}
+	n_cert += local_cert; n_out += local_out;
+	if(ferror(fo) || fclose(fo) != 0) write_err = true;
+	if(fu && (ferror(fu) || fclose(fu) != 0)) write_err = true;
+	{
+		lock_guard lk(hmut);
+		for(int d = 0; d < 1024; d++) { hist_leaf[d] += hl[d]; hist_int[d] += hi_[d]; hist_unp[d] += hu[d]; }
+		g_max = max(g_max, gmax_local);
+	}
+	if(capped) { lock_guard lk(gmut); done = true; gcv.notify_all(); }
+}
+
+int main(int argc, char **argv)
+{
+	nthreads = argc > 1 ? atoi(argv[1]) : (int)thread::hardware_concurrency();
+	if(argc > 2) maxdepth = min(atoi(argv[2]), 1000);
+	child = (pair<idt, idt> *)mmap(nullptr, (ID_CAP + 16) * sizeof(pair<idt, idt>), PROT_READ | PROT_WRITE,
+		MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
+	if(child == MAP_FAILED) { perror("mmap"); return 2; }
+	for(ull mask = 0; mask < 1ull << n; mask++)
+	{
+		Task t; t.id = (idt)(mask + 1); t.depth = 0;
+		for(int i = 0; i < n; i++)
+			if((mask >> i) & 1) t.box[i][0] = 1, t.box[i][1] = numeric_limits<ld>::infinity();
+			else t.box[i][0] = 0, t.box[i][1] = 1;
+		gq.push_back(move(t));
+	}
+	next_id = (1ull << n) + 1;
+	cout << "gen43f id bytes " << sizeof(idt) << " maxdepth " << maxdepth << " n_threads = " << nthreads << " n = " << n << " m = " << m << " rho = " << setprecision(17) << rho << endl;
+	auto t0 = chrono::steady_clock::now();
+	atomic<bool> fin{false};
+	thread mon([&] {
+		while(!fin)
+		{
+			for(int i = 0; i < 300 && !fin; i++) this_thread::sleep_for(chrono::milliseconds(100));
+			double el = chrono::duration<double>(chrono::steady_clock::now() - t0).count();
+			cerr << "t " << (long)el << " iter " << n_iter.load() << " cert " << n_cert.load() << " ids " << next_id.load() - 1
+			     << " rate " << (long)(n_iter.load() / max(el, 1.0)) << " maxdepth_seen " << max_depth_seen.load()
+			     << " unproven " << n_unproven.load() << endl;
+		}
+	});
+	vector<thread> ws;
+	for(int i = 0; i < nthreads; i++) ws.emplace_back(worker, i, format("rec_t{:03d}.part", i));
+	for(auto &&w : ws) w.join();
+	fin = true; mon.join();
+	auto print_hist = [&] {
+		int dmax = 0;
+		for(int d = 0; d < 1024; d++) if(hist_leaf[d] || hist_int[d] || hist_unp[d]) dmax = d;
+		cout << "depth histogram (depth: certified internal unproven):";
+		for(int d = 0; d <= dmax; d++) cout << " " << d << ":" << hist_leaf[d] << "/" << hist_int[d] << "/" << hist_unp[d];
+		cout << endl;
+		cout << "unproven " << n_unproven.load() << " with centre g > 0: " << n_unproven_pos.load() << " max centre g " << g_max << endl;
+	};
+	print_hist();
+	if(capped) { cout << "ABORT: id cap reached (" << next_id.load() << ")" << endl; return 3; }
+	if(write_err) { cout << "ABORT: write error in a record part file (disk full?)" << endl; return 4; }
+	uint64_t N = next_id.load() - 1;
+	double el = chrono::duration<double>(chrono::steady_clock::now() - t0).count();
+	cout << "certified " << n_cert.load() << " (out of domain " << n_out.load() << ") nodes " << N << " internal "
+	     << (N - n_cert.load()) << " seconds " << el << endl;
+	// child file: for id = N down to 1
+	FILE *fc = fopen(("child" + suffix).c_str(), "wb");
+	vector<idt> buf; buf.reserve(1 << 22);
+	for(uint64_t i = N; i >= 1; i--)
+	{
+		buf.push_back(child[i].first); buf.push_back(child[i].second);
+		if(buf.size() >= (1u << 22)) { fwrite(buf.data(), sizeof(idt), buf.size(), fc); buf.clear(); }
+	}
+	fwrite(buf.data(), sizeof(idt), buf.size(), fc);
+	if(ferror(fc) || fclose(fc) != 0) { cout << "ABORT: write error in the child file" << endl; return 4; }
+	// certificate file: concatenation of the per-thread record files (records in any order)
+	string cname = "certificate" + suffix;
+	FILE *fo = fopen(cname.c_str(), "wb");
+	vector<char> cb(1 << 24);
+	for(int i = 0; i < nthreads; i++)
+	{
+		string pn = format("rec_t{:03d}.part", i);
+		FILE *fi = fopen(pn.c_str(), "rb");
+		size_t k;
+		while((k = fread(cb.data(), 1, cb.size(), fi)) > 0) fwrite(cb.data(), 1, k, fo);
+		if(ferror(fi) || ferror(fo)) { cout << "ABORT: error while concatenating " << pn << endl; return 4; }
+		fclose(fi); remove(pn.c_str());
+	}
+	if(fclose(fo) != 0) { cout << "ABORT: write error in the certificate file" << endl; return 4; }
+	cout << "wrote " << cname << " and child" << suffix << endl;
+	if(n_unproven.load())
+	{
+		FILE *fu = fopen("unproven.bin", "wb");
+		for(int i = 0; i < nthreads; i++)
+		{
+			string pn = format("unp_t{:03d}.part", i);
+			FILE *fi = fopen(pn.c_str(), "rb");
+			if(!fi) continue;
+			size_t k;
+			while((k = fread(cb.data(), 1, cb.size(), fi)) > 0) fwrite(cb.data(), 1, k, fu);
+			fclose(fi); remove(pn.c_str());
+		}
+		fclose(fu);
+		cout << "NOT A CERTIFICATE: " << n_unproven.load() << " unproven boxes in unproven.bin" << endl;
+		return 5;
+	}
+	return 0;
+}

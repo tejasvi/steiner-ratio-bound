@@ -1,0 +1,13 @@
+OK leaves 10376823 internal 10376759 bytes 41507228
+OK leaves 10376823 internal 10376759 jobs 12507 shards 6 skel_bytes 24950
+wrote 6 shards, 12507 jobs, in ./S43Data/C1
+OK leaves 12696761 internal 12696633 bytes 50786916
+OK leaves 12696761 internal 12696633 jobs 17542 shards 11 skel_bytes 34956
+wrote 11 shards, 17542 jobs, in ./S43Data/C2
+OK leaves 95569010 internal 95568946 bytes 382275976
+OK leaves 95569010 internal 95568946 jobs 102728 shards 28 skel_bytes 205392
+wrote 28 shards, 102728 jobs, in ./S43Data/C3
+OK leaves 436460311 internal 436460055 bytes 1745840988
+OK leaves 436460311 internal 436460055 jobs 515548 shards 437 skel_bytes 1030840
+wrote 437 shards, 515548 jobs, in ./S43Data/C4
+MAKE_DATA rc 0 wall 247 s

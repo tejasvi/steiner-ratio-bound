@@ -1,0 +1,19 @@
+# Certificate files of "The Steiner ratio is at least 0.8564" (archived compressed with xz at doi:10.5281/zenodo.23582438).
+# name  bytes  sha256  |  xz name  xz bytes  xz sha256
+# Each file decompresses (xz -d) to the uncompressed file with the given size and sha256.
+d_regular_f_ge_dv_certificate.bin  1162204176  58404f7e5ee2d803238bac3a147a07ea69eb419950c19625cc9ba865e0c67f98  |  d_regular_f_ge_dv_certificate.bin.xz  34395856  c8dd875c92bbcdc09cce2b2e7e426bb94618ca34824217ebfc8b352df78d046c
+d_regular_f_ge_dv_child.bin  332057312  5905207732c0cba51549b443d09a5ab18b504a9d247b3115eb1dee683e617e2d  |  d_regular_f_ge_dv_child.bin.xz  26930744  c03fa9d45cc8454e0b70638d18399e63515c33a6063b1a1df35c1d102af2eba5
+d_steiner_f_ge_d_certificate.bin  1625185408  47613af8aac1b03ba5d78f4a8523030da8ba348fc3aa9af962087a79503f4d9b  |  d_steiner_f_ge_d_certificate.bin.xz  46321804  858f117989bcc45509f5a058a3f938a2079543f95d312c5a9d7f386fc84f0681
+d_steiner_f_ge_d_child.bin  406294304  78c6fbb9b902a17beac9c02adad48c7e97d18511f49e83babebbdd0de1a86998  |  d_steiner_f_ge_d_child.bin.xz  33569396  99459a458409775675e8d46d9f4c97b28226050dd459a4efd9289c0a04566aa3
+d_regular_f_le_d_certificate.bin  10703729120  f6d9d3173b3865a688b3b6b9610d5261fc880272465403c7262e0d7bd5cd4970  |  d_regular_f_le_d_certificate.bin.xz  272644468  4c45aec3564041b84241d6a52fdc83d13e494c6ce2bb3e32ca9ffe4a2ab3f7cf
+d_regular_f_le_d_child.bin  3058207296  d611a45b318b80381a64a6ff19972cf0431f0b1b2c509309b6d06be54a5e4a75  |  d_regular_f_le_d_child.bin.xz  245929944  ae75958977f0c1c763c9e8167fd40c52d65dcf8d9bd3c99cbe8292c7c6dcbdec
+d_steiner_f_le_d_certificate.bin  62850284784  2a036f083b81708b0827b8e87c7ed7869dead40a49b71f3a61a735aec68a0710  |  d_steiner_f_le_d_certificate.bin.xz  1349188600  1b6d8a266d7174ef33a665e8ed27c15e78b4c5f7ae61093b4c911e5b626a2ac4
+d_steiner_f_le_d_child.bin  13966725856  7ebc2609d105ef9a0dbe10d830e6e093c2cb9a0d5012c4a6b37707071ce5f837  |  d_steiner_f_le_d_child.bin.xz  1125858740  8b38b08b945285c3254baf92466318440103c453a205c16030d12cee81b5e785
+# total uncompressed: 94104688256 bytes
+#
+# Data files of the Lean proof in lean/ (archived compressed with xz at the same DOI); each tar unpacks to a directory s/
+# that belongs in lean/data/C1 ... lean/data/C4 (see lean/README.md). name  bytes  sha256  |  xz name  xz bytes  xz sha256
+data_C1.tar  41533440  5a384dfd2f146955d80453e45ca565bff008f789106e52d1b13c4ade76d7b5fb  |  data_C1.tar.xz  408264  346b87e8a57e4d32681ebb7b1fd76b7756033b2da7ccaa25136b6e69d642eaa0
+data_C2.tar  50821120  30d987c0dd2e8e7240abc2a54b1a19e97350a38ed5c72fe0163dd35c74c8f13d  |  data_C2.tar.xz  965516  285f8306d4a7dd55a395b899cfec799350bce803656ab80ec8988e339bf3404c
+data_C3.tar  382412800  59aeab36dd285d4cca56bae1dc6f66bb0e0e51fbeef2b33b4879b0a0a97dbf47  |  data_C3.tar.xz  2674916  89e5cfeb44be3cc6f736cf4b4362ce33fd53c3e7d9ac2f4269a5e18becf5b2a0
+data_C4.tar  1746708480  f6c86c57d0894b24a865abdca4117f126a57d4e5f1ab4fa71448023ce620bdda  |  data_C4.tar.xz  13158976  74db656301c479124b2cba6c8415664e0707b532e923c430dce5bfe5b4868846

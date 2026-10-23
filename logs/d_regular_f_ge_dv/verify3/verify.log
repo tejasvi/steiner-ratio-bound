@@ -1,0 +1,4 @@
+start 2026-10-22T10:50:54Z d_regular f_ge_dv rho 2141/2500 records 10376823 n 6 cert 58404f7e5ee2d803 child 5905207732c0cba5 indep43c_v3 90323b1736bec53c cover43 9f218cf6cbf99f90 splits 843b4d14c8143364
+chunks 21 unreadable 0 totals {'ok': 9426537, 'skip_sym': 0, 'skip_sub': 950286, 'fail': 0, 'count': 10376823} records 10376823
+first failures []
+RESULT: ALL RECORDS PASS

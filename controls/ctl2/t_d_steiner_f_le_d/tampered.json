@@ -1,0 +1,1 @@
+{"start": 0, "count": 100000, "ok": 96347, "skip_sym": 102, "skip_sub": 3550, "fail": 1, "fails": [{"rec": 1002, "id": 100901, "split": 92, "lemma": 0, "why": "vertex value not <= 0"}]}

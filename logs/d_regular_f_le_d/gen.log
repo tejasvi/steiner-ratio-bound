@@ -1,0 +1,22 @@
+start 2026-10-22T11:07:12Z host <host> nproc 96 fam d_regular sub f_le_d rho 0.8564 threads 95 src 3191d5f100d2b2c4 formulas 0f2711de76042ddd
+In file included from gen43f.cpp:69:
+formulas/F0: In lambda function:
+formulas/F0:19:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   19 |         if(n1==0||n2==0) return 0.0; double c=(v1x*v2x+v1y*v2y)/(n1*n2); c = c>1?1:(c<-1?-1:c); return std::acos(c); };
+      |         ^~
+formulas/F0:19:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   19 |         if(n1==0||n2==0) return 0.0; double c=(v1x*v2x+v1y*v2y)/(n1*n2); c = c>1?1:(c<-1?-1:c); return std::acos(c); };
+      |                                      ^~~~~~
+In file included from gen43f.cpp:72:
+formulas/F3: In function ‘__net4::V2 __net4::wz(V2, V2, V2, V2)’:
+formulas/F3:10:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   10 |     if(rp < 1e-14) return p; if(rq < 1e-14) return q; if(rr < 1e-14) return r;
+      |     ^~
+formulas/F3:10:30: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   10 |     if(rp < 1e-14) return p; if(rq < 1e-14) return q; if(rr < 1e-14) return r;
+      |                              ^~
+
+real	0m9.304s
+user	0m9.147s
+sys	0m0.156s
+rc 0 2026-10-22T11:08:02Z

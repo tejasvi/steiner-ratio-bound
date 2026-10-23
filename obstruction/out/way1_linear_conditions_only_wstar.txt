@@ -1,0 +1,16 @@
+NONLINEAR CONDITIONS st_cond3, st_cond7 IGNORED (treated as true; the linear ones kept). way 1 (published family) at wstar = (b,c,d,s,e) = ['13656/10000', '110927/100000', '365604/1000000', '1/1', '171605/1000000'], f := d; rho0 = 856/1000
+pairs evaluated 1422 (158 splits x 9 lemma ids); usable (condition not certainly false) 529; of these with the condition certainly true 529
+max critical rho over usable pairs: in [0.855986741241, 0.855986741241] at split 48 (1-based line of d_regular_splits.txt), lemma 0
+top 10 pairs (critical rho enclosure, split, lemma, condition certainly true):
+  [0.855986741241, 0.855986741241]  split 48  lemma 0  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 1  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 2  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 3  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 4  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 5  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 6  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 7  True
+  [0.855986741241, 0.855986741241]  split 48  lemma 8  True
+  [0.855986060251, 0.855986060251]  split 46  lemma 0  True
+pairs without a certified F(w, rho0) > 0: 0 []
+RESULT: OBSTRUCTION CERTIFIED: every usable pair has F(w, rho0) > 0, so no box containing w can be certified at rho0 by this family

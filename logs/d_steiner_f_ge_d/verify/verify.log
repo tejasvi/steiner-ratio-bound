@@ -1,0 +1,9 @@
+start 2026-10-22T10:30:43Z d_steiner f_ge_d rho 2141/2500 records 12696761 n 7 cert 47613af8aac1b03b child 78c6fbb9b902a17b indep43c 29c2874dba0d02a9 cover43 9f218cf6cbf99f90 splits b63d82931ba341d3
+cover rc 0
+chunks 7 unreadable 0 totals {'ok': 12690883, 'skip_sym': 5878, 'skip_sub': 0, 'fail': 0, 'count': 12696761} records 12696761
+first failures []
+RESULT: ALL RECORDS PASS
+end 2026-10-22T11:07:12Z
+records 12696761, nodes 25393394, n 7, id bytes 8
+leaves 12696761 (= records), internal 12696633, max depth 75, ids not in the tree 0
+OK COVER: the 12696761 record boxes tile the 128 root boxes (the domain [0,inf)^7)

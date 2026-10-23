@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use these programs or data, please cite the paper."
+title: "Certificates, programs and Lean formalization for “The Steiner ratio is at least 0.8564”"
+authors:
+  - family-names: Tomar
+    given-names: Tejasvi Singh
+    orcid: "https://orcid.org/0000-0003-4668-3639"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+repository-code: "https://github.com/tejasvi/steiner-ratio-bound-v2"
+doi: 10.5281/zenodo.23582438
+version: "2"
+preferred-citation:
+  type: article
+  title: "The Steiner ratio is at least 0.8564"
+  authors:
+    - family-names: Tomar
+      given-names: Tejasvi Singh
+      orcid: "https://orcid.org/0000-0003-4668-3639"
+  doi: 10.5281/zenodo.23582437
+  year: 2026

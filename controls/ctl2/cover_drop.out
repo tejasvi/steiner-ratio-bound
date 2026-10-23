@@ -1,0 +1,5 @@
+leaf id 348393 has no record
+FAIL: leaf without record
+records 10376822, nodes 20753582, n 6, id bytes 8
+FAIL: leaf without record
+rc 1

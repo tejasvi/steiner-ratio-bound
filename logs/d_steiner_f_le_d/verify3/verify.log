@@ -1,0 +1,4 @@
+start 2026-10-22T12:12:27Z d_steiner f_le_d rho 2141/2500 records 436460311 n 8 cert 2a036f083b81708b child 7ebc2609d105ef9a indep43c_v3 90323b1736bec53c cover43 9f218cf6cbf99f90 splits b63d82931ba341d3
+chunks 873 unreadable 0 totals {'ok': 341304562, 'skip_sym': 292651, 'skip_sub': 94863098, 'fail': 0, 'count': 436460311} records 436460311
+first failures []
+RESULT: ALL RECORDS PASS

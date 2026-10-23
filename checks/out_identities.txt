@@ -1,0 +1,75 @@
+OK   X: (A-X)/1 + (B-X)/b + (Y-X)/s = 0
+OK   Y: (X-Y)/s + (D-Y)/d + (Z-Y)/c = 0
+OK   Z: (Y-Z)/c + (R-Z)/e + (Q-Z)/f = 0
+OK   D (d_steiner): (Y-D)/d + (U-D)/u + (V-D)/v = 0
+OK   |AY|^2 = 1 + s + s^2
+OK   |AZ|^2 = 1 + s + s^2 - c + cs + c^2
+OK   W = 1-c-e lies on l5
+OK   |RW|^2 = (s+c)^2
+OK   W - R = (s+c) w^2 (W beyond R along l5)
+OK   lambda5(A3) = -(sqrt3/2) e
+OK   lambda5(A1) = -(sqrt3/2)(c+e)
+OK   lambda5(A2) = -(sqrt3/2)(c+e)
+OK   lambda5(A) = -(sqrt3/2)(c+e-1)
+OK   foot of A on l5 at distance (1+2s+c-e)/2 from R
+OK   foot H of A on l5 = -(c+e-1)(3/4 + sqrt3/4 i)
+OK   Lemma 3.5 (c=1): foot at distance 1+s-e/2 from R
+OK   |AR|^2 - e^2 = (1+s)(1+s-e) at c=1
+OK   Re A3 = 1 + (s-c)/2
+OK   |AA4|^2 = |AA3|^2 - e(2 x3 - e)
+OK   4 x3^2 - |AA3|^2 = 3(1+s)(1-c)
+OK   Pi: W -> A1 is real (W < 1 since c + e > 0)
+OK   Pi: A1 -> A2 = s wb
+OK   Pi: A2 -> A3 = c (-w)
+OK   Pi: A3 -> A4 = e (-1)
+OK   Pi: A4 -> W = (s+c) w^2 (turns of -60 deg at every vertex: convex, clockwise)
+OK   L1: (1+2s+c-e) - (2c + (2-2/sqrt3)s) = 1 - c - e + (2/sqrt3)s
+OK   L2: (1+2s+c-e) - (2s + (2-2/sqrt3)c) = 1 + (2/sqrt3 - 1)c - e
+OK   Y + (1+2s) w lies on the line through A and H (direction 3/4 + sqrt3/4 i)
+OK   Y + (1+2s) w lies on the line of sigma_3 (Y - t w), at t = -(1+2s) < 0
+OK   H5 = R + ((c-e)/2) w^2
+OK   foot of Y on l5 at distance (c-e)/2 from R
+OK   H5 lies on l5
+OK   |YH5|^2 = (3/4)(c+e)^2
+OK   lambda5(Y) = -(sqrt3/2)(c+e)
+OK   door Y->H5 has direction 210 deg (H5 - Y is a positive multiple of e^{i 7pi/6})
+OK   door Y->H5: real part of (H5-Y)/e^{i7pi/6} = (sqrt3/2)(c+e) > 0
+OK   sigma_3 leaves Y in direction 240 deg (Z - Y = -c w)
+OK   |AH5|^2 - |AZ|^2 = ((3/4)(c+e)^2 - c^2) - c/2 - 3e/2 - cs
+OK   |AR|^2 - |AH5|^2 = (1/4)(c-e)(2+4s+c-e)
+OK   height of H5 above the line ZR = (sqrt3/4)(c-e)
+OK   height of Y above the line ZR = (sqrt3/2)c
+OK   |RQ|^2 = e^2 + ef + f^2
+OK   (e+f)^2 - |RQ|^2 = ef
+OK   |RQ|^2 - (e/2 + f)^2 = (3/4) e^2 (dPhi/df >= 0)
+OK   M = 1+s-e-a5 lies on l6
+OK   |A5 M| = s + c - a5 (M - A5 = (s+c-a5) w)
+OK   lambda6(A4) = -(sqrt3/2) a5
+OK   lambda6(A3) = -(sqrt3/2)(a5+e)
+OK   lambda6(A2) = -(sqrt3/2)(a5+e)
+OK   lambda6(A1) = (sqrt3/2)(M-1)
+OK   lambda6(A) = (sqrt3/2) M
+OK   sigma_3 is parallel to l6 (direction -w)
+OK   |AM| = a5 - (s+1-e) when M < 0
+OK   |AA4|^2 - (c+e-1)^2 = (s+c)(s+1-e)
+OK   mirror D -> 0
+OK   mirror Y -> 1
+OK   mirror Z -> 1 + (c/d) wb
+OK   mirror Q -> 1 + (c/d) wb - (f/d) w
+OK   mirror Q2 -> mirror(Q) - g/d
+OK   mirror_V V -> 0
+OK   mirror_V D -> 1
+OK   mirror_V Y -> 1 + (d/v) wb
+OK   mirror_V Z -> 1 + (d/v) wb - (c/v) w
+OK   mirror_V Q -> mirror_V(Z) - f/v
+OK   |VQ|^2 - (c+f-v)^2 = (d+c)(d+v-f)
+OK   |VY|^2 = d^2 + dv + v^2 (> v^2)
+OK   x_Q = Re(D - Q) = d + (c-f)/2
+OK   |DQ2|^2 = |DQ|^2 - g(2 x_Q - g)
+OK   |DQ*| = |DQ| for Q* = Q + 2 x_Q
+OK   L(S') - (g - 2 x_Q) = 1 + b + s + 3d + 2c + e
+OK   |DQ2|^2 - (f+g-d)^2 = (c+f)(c+d-g)
+OK   2 x_Q <= c + d when f >= d: c + d - 2 x_Q = f - d
+OK   L_S^2 = a^2 + b^2 + 2ab sin(gamma - 30deg)
+OK   a^2 + ab + b^2 - (3/4)(a+b)^2 = (a-b)^2/4
+SUMMARY: 74 OK, 0 FAIL
