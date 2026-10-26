@@ -90,7 +90,7 @@ for c in C1 C2 C3 C4; do mkdir -p data/$c && tar -xJf data_$c.tar.xz -C data/$c;
 puts the files in place. The checksums of the archives are in `MANIFEST.txt` at the top of the repository, and those
 of the files they contain in `evidence/data_sums.txt` and `evidence/data_shards_sha256.txt`. The data can also be
 regenerated from the certificate files: after `xz -d` of the eight certificate files into a directory `CERT_DIR`,
-`tools/make_data.sh CERT_DIR` (gcc and python3 needed) runs `tree43c.c`, which writes the code stream of a tree from a
+`sh tools/make_data.sh CERT_DIR` (gcc and python3 needed) runs `tree43c.c`, which writes the code stream of a tree from a
 record file and its tree file and compares every leaf box with its record, `split43.c`, which cuts the stream into
 the skeleton and the shards, and `gen_lean43c.py`, which writes the Lean modules of each family. On the data of the
 paper it reproduces `data/Ck/s` and the 490 modules of `S43Data/C1` to `S43Data/C4` byte for byte

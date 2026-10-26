@@ -17,3 +17,7 @@ data_C1.tar  41533440  5a384dfd2f146955d80453e45ca565bff008f789106e52d1b13c4ade7
 data_C2.tar  50821120  30d987c0dd2e8e7240abc2a54b1a19e97350a38ed5c72fe0163dd35c74c8f13d  |  data_C2.tar.xz  965516  285f8306d4a7dd55a395b899cfec799350bce803656ab80ec8988e339bf3404c
 data_C3.tar  382412800  59aeab36dd285d4cca56bae1dc6f66bb0e0e51fbeef2b33b4879b0a0a97dbf47  |  data_C3.tar.xz  2674916  89e5cfeb44be3cc6f736cf4b4362ce33fd53c3e7d9ac2f4269a5e18becf5b2a0
 data_C4.tar  1746708480  f6c86c57d0894b24a865abdca4117f126a57d4e5f1ab4fa71448023ce620bdda  |  data_C4.tar.xz  13158976  74db656301c479124b2cba6c8415664e0707b532e923c430dce5bfe5b4868846
+#
+# Hash lists of the kernel-checked proof in lean_kernel/ (archived compressed with xz at the same DOI); see lean_kernel/README.md.
+# name  bytes  sha256  |  xz name  xz bytes  xz sha256
+lean_kernel_lists.tar  179691520  bcc6c6f118a8f53dc949373843aa6f2c1317bacc4a54b1400a286e7cbc39c289  |  lean_kernel_lists.tar.xz  63906192  70ffcb1ff7d3d7c43d2acc0978b532b36a3ce472d808c07a392187812497e053
