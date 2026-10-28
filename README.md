@@ -1,10 +1,18 @@
 # Certificates, programs and Lean formalization for "The Steiner ratio is at least 0.8564"
 
+The paper proves that (2141/2500) L_MST(P) <= L_SMT(P) for every finite set P of points in the Euclidean plane, where
+L_SMT and L_MST are the lengths of a Steiner minimal tree and of a minimum spanning tree; that is, the Steiner ratio is
+at least 0.8564. Gilbert and Pollak conjectured that it equals sqrt(3)/2 = 0.8660..., and the previous lower bound was
+0.8559, due to Ke, Huang, Shu, He, Gai and Wang. The proof reduces, through an induction of Du and Hwang, to
+inequalities on boxes of local configurations of a Steiner minimal tree: each box carries a splitting of the tree whose
+cost bound is checked at its vertices.
+
 This repository contains the programs, splitting tables, logs and control runs of the computer-assisted part of the
 paper, the programs behind its Proposition 6.1, and the two formal proofs of Section 7 in Lean 4: one with checks run as
 compiled code (`lean/`) and one with all checks run in the Lean kernel (`lean_kernel/`). The paper is archived at
-doi:10.5281/zenodo.23644989. The certificate files, the data files of the formal proofs, the hash lists of the kernel-checked
-proof and a copy of this repository are archived at doi:10.5281/zenodo.23644994.
+doi:10.5281/zenodo.23716009. The certificate files, the data files of the formal proofs, the hash lists of the kernel-checked
+proof and a copy of this repository are archived at doi:10.5281/zenodo.23716011.
+`paper/main.tex` is the LaTeX source of the paper.
 
 The proof follows the method of Ke, Huang, Shu, He, Gai and Wang (arXiv:2601.22365, ICML 2026), whose code is at
 https://github.com/keyisi2006/Steiner-Ratio. The splitting tables and the generator of boxes come from that code; see
@@ -21,19 +29,22 @@ https://github.com/keyisi2006/Steiner-Ratio. The splitting tables and the genera
 | Section 5.4 | the control runs | `controls/` |
 | Proposition 6.1 | the obstruction at w* and w1 | `obstruction/` |
 | Sections 2-3, Remark 3.9 | identities used in the proofs; the two examples of the remark | `checks/` |
-| Section 7 | Theorem 1.1 from the hypotheses (H1)-(H3) (`S43.Final.steiner_ratio_ge`) and the certificate theorem (`S43.Final.certificate`), with checks run as compiled code | `lean/`, data files of the formal proofs (archive) |
-| Section 7.1 | the same two theorems with all checks run in the Lean kernel (`S43K.Final.steiner_ratio_ge`, `S43K.Final.certificate`) | `lean_kernel/`, data files of the formal proofs and hash lists (archive) |
+| Section 7, Appendix A.1 | Theorem 1.1 from the hypotheses (H1)-(H3) (`S43.Final.steiner_ratio_ge`) and the certificate theorem (`S43.Final.certificate`), with checks run as compiled code | `lean/`, data files of the formal proofs (archive) |
+| Section 7, Appendix A.2 | the same two theorems with all checks run in the Lean kernel (`S43K.Final.steiner_ratio_ge`, `S43K.Final.certificate`) | `lean_kernel/`, data files of the formal proofs and hash lists (archive) |
 
 ## The certificate files
 
 There are four families. Each has a record file and a tree file:
 
-| family | n | coordinates | records | record file | tree file |
-|---|---|---|---|---|---|
-| d_regular, f <= d (`d_regular f_le_d`) | 6 | b, c, d, s, e, f | 95,569,010 | `d_regular_f_le_d_certificate.bin` | `d_regular_f_le_d_child.bin` |
-| d_regular, f >= d (`d_regular f_ge_dv`) | 6 | b, c, d, s, e, f | 10,376,823 | `d_regular_f_ge_dv_certificate.bin` | `d_regular_f_ge_dv_child.bin` |
-| d_steiner, f <= d (`d_steiner f_le_d`) | 8 | b, c, d, s, u, v, e, f | 436,460,311 | `d_steiner_f_le_d_certificate.bin` | `d_steiner_f_le_d_child.bin` |
-| d_steiner, f >= d (`d_steiner f_ge_d`) | 7 | b, c, d, s, u, v, e (f = d) | 12,696,761 | `d_steiner_f_ge_d_certificate.bin` | `d_steiner_f_ge_d_child.bin` |
+| family | n | coordinates | records | checked | skipped | record file | tree file |
+|---|---|---|---|---|---|---|---|
+| d_regular, f <= d (`d_regular f_le_d`) | 6 | b, c, d, s, e, f | 95,569,010 | 63,854,665 | 31,714,345 | `d_regular_f_le_d_certificate.bin` | `d_regular_f_le_d_child.bin` |
+| d_regular, f >= d (`d_regular f_ge_dv`) | 6 | b, c, d, s, e, f | 10,376,823 | 9,426,537 | 950,286 | `d_regular_f_ge_dv_certificate.bin` | `d_regular_f_ge_dv_child.bin` |
+| d_steiner, f <= d (`d_steiner f_le_d`) | 8 | b, c, d, s, u, v, e, f | 436,460,311 | 341,304,562 | 95,155,749 | `d_steiner_f_le_d_certificate.bin` | `d_steiner_f_le_d_child.bin` |
+| d_steiner, f >= d (`d_steiner f_ge_d`) | 7 | b, c, d, s, u, v, e (f = d) | 12,696,761 | 12,690,883 | 5,878 | `d_steiner_f_ge_d_certificate.bin` | `d_steiner_f_ge_d_child.bin` |
+
+Skipped records lie outside the domain of their family (Table 2 of the paper). Every checked record passes
+(`logs/run/ALL3.log`), and `cover43` reports `OK COVER` for each family (`logs/<family>/verify/cover.out`).
 
 The archive holds the files compressed with xz (`<name>.bin.xz`); `xz -d` restores them. `MANIFEST.txt` lists, for
 every file, the size and SHA-256 of the uncompressed file and of the compressed file. The uncompressed files have
@@ -129,6 +140,8 @@ Lean's kernel instead of code generated by Lean's compiler. The generated module
 (`lean_kernel_lists.tar.xz`) allow every module and compiled file of a rebuild to be compared with those of the original
 build. `lean_kernel/README.md` describes the files and the build.
 
+`CHECKS.md` describes the independent rebuilds and replays of both proofs.
+
 ## The generator
 
 `generator/gen43f.cpp.tmpl` builds the trees. It is derived from the generator of Ke et al. (their files
@@ -168,8 +181,10 @@ and CRC32C checksums of the certificate files computed on the machine that produ
   unbounded f whose splitting joins Q without removing the edge ZQ, and a record that needs Lemma 3.11 under an
   earlier version of the checker all fail.
 - `cover_controls_cov80.log`: dropped, altered and duplicated records make `cover43` fail.
-- `audit_crafted_records.log`: records crafted during an audit of the checker, which an earlier version (version 2)
-  accepted and the final version rejects (Section 5.4).
+- `audit_crafted_records.log`: records crafted during an independent audit of the checker. An earlier version
+  (version 2) accepted a record with an edge AE and lemma set 0 on a box with hi_c = inf, because it tested the
+  condition c <= 1 only at the finite vertices; such records do not occur in the certificate, and the final version
+  rejects them.
 
 ## Proposition 6.1
 
@@ -180,7 +195,7 @@ Proposition 6.1(b) with lower bounds for the length of S+ (`out/way3_*.txt`). `o
 the formulas of Ke et al. in double precision at the same points (`out/way2.txt`). `out/summary.txt` has one line per
 computation.
 
-## Checks of the proofs
+## Identities used in the proofs
 
 `checks/identities.py` checks with sympy the identities used in Sections 2 and 3 (74 checks, output
 `checks/out_identities.txt`). `checks/remark_examples.py` checks the two examples of Remark 3.9 in exact rational
@@ -195,10 +210,12 @@ are removed. The shell scripts in `runs/` refer to the working directory as `$WO
 
 ## Versions
 
-Version 3 adds the second formal proof (`lean_kernel/`, Section 7.1 of the paper), whose checks all run in the Lean
-kernel, and the hash lists of its generated modules; the other files are those of version 2
-(doi:10.5281/zenodo.23582438). Version 2 added the first formal proof (`lean/`) and its data files. The certificate files,
-the other programs, the logs and the controls are those of version 1 (doi:10.5281/zenodo.23570502).
+Version 4 accompanies version 4 of the paper, which has a new abstract and introduction and reports the computations
+more briefly; apart from this README, `CITATION.cff`, `SHA256SUMS`, the new files `CHECKS.md` and `paper/main.tex`, the files are those of version 3 (doi:10.5281/zenodo.23644994). Version 3 added the
+second formal proof (`lean_kernel/`, Appendix A.2 of version 4 of the paper), whose checks all run in the Lean kernel, and the hash
+lists of its generated modules; version 2 (doi:10.5281/zenodo.23582438) added the first formal proof (`lean/`) and its
+data files. The certificate files, the other programs, the logs and the controls are those of version 1
+(doi:10.5281/zenodo.23570502).
 
 ## Provenance and licences
 
